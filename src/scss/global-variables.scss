@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Play&family=Rubik&display=swap');
+
+// Base Color
+$base-color: #3498db;
+
+// Background Color
+$background-color: #f5f5f5;
+
+// Lighter Tints
+$lighter-tint-1: #5fa8e3;
+$lighter-tint-2: #8ac8f0;
+$lighter-tint-3: #b5d8f7;
+
+// Darker Shades
+$darker-shade-1: #2076b4;
+$darker-shade-2: #115c8a;
+$darker-shade-3: #0a475f;
+
+// Dark text color
+$dark-text: #333;
+
+//Border Radius
+$general-radius: 10px;
+
+body{
+    background-color: $background-color;
+    font-family: 'Rubik', sans-serif;
+    width: 99%;
+    height: 97vh;
+    padding: 2px;
+}
+

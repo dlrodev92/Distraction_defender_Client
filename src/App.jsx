@@ -1,12 +1,14 @@
-import './App.scss'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
+import './scss/global-variables.scss'
+
+
 
 function App() {
 
   return (
     <>
-     <div>
-        <h1 className='hello'>Hellos React App perro sanchez a prision</h1>
-     </div>
+     <Signup/>
     </>
   )
 }
