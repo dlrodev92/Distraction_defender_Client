@@ -1,22 +1,26 @@
 import { useState } from 'react';
+import Input from '../components/Input';
 import '../scss/login.scss';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [userLogin, setUserLogin] = useState({
+    username: '',
+    password: '',
+  });
+  
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
+  const handleUserLogin = (e) => {
+    setUserLogin({
+      ...userLogin,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
 
   const handleLogin = (e) => {
     e.preventDefault();
     // Add your login logic here
-    console.log('Logging in with:', username, password);
+    console.log(userLogin);
   };
 
   return (
@@ -24,20 +28,8 @@ const Login = () => {
         <div className='login-container'>
             <h1>Login</h1>
                 <form className='login-form' onSubmit={handleLogin}>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                    type='text'
-                    placeholder='Username'
-                    value={username}
-                    onChange={handleUsernameChange}
-                    />
-                    <label htmlFor="password">Password:</label>
-                    <input
-                    type='password'
-                    placeholder='Password'
-                    value={password}
-                    onChange={handlePasswordChange}
-                    />
+                    <Input className='login-input' label='Username' name='username' onChange={handleUserLogin}/>
+                    <Input className='login-input' label='Password' type='password' name='password' onChange={handleUserLogin}/>
                     <button>Login</button>
                 </form>
                 <a rel="stylesheet" href="#" className='signup-form-link'>Signup Here</a>

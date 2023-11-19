@@ -42,7 +42,7 @@
 }
 
 .signup-form button{
-    width: 80%;
+    width: 60%;
     height: 30px;
     border-radius: $general-radius;
     border: none;
@@ -54,4 +54,12 @@
     color: $background-color;
     cursor: pointer;
     transition: 0.5s;
+}
+
+.signup-form button:hover{
+    background-color:$background-color;
+    font-weight: bold;
+    color: $darker-shade-1;
+    cursor: pointer;
+    scale: 0.9;
 }

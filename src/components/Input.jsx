@@ -2,7 +2,7 @@ import '../scss/input.scss';
 
 const Input = (props) => {
   return (
-    <div className='input-container'>
+    <div className={props.className || 'input-container'}>
       <label>{props.label}</label>
       <input
         type={props.type || 'text'}
