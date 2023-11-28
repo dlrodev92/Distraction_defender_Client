@@ -7,7 +7,7 @@ import Input from '../components/Input';
 import { useState } from 'react';
 import { MagicMotion } from "react-magic-motion";
 const UserDashboard = () =>{
-    const [isEdit, setIsEdit] = useState(true);
+    const [isEdit, setIsEdit] = useState(false);
 
     const toogleEdit = () =>{
 

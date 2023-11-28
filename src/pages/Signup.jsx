@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Input from '../components/Input';
 import '../scss/signup.scss';
+import api from '../api/api';
 
 const Signup = () => {
 
@@ -28,23 +29,35 @@ const Signup = () => {
     setProfilePicture(event.target.files[0]);
   }
 
-  const handleSubmit = (event) => {
-    if (formData.password !== formData.passwordConfirm) {
-      event.preventDefault();
-      alert('Passwords do not match');
-    } else {
-      console.log(formData);
-      console.log(profilePicture);
-    }
-    
-    setFormData({
-      ...formData,
-      [event.target.name]: ' '
-    })
+  const handleSubmit = async (event) => {
+    event.preventDefault();
   
-    setProfilePicture(null);
-    alert('User created successfully');
+    if (formData.password !== formData.passwordConfirm || formData.password === '' || formData.passwordConfirm === '') {
+      alert('Passwords do not match, please try again');
+      return;
+    }
+  
+    const dataConfirmed = {
+      "username": formData.username,
+      "email": formData.email,
+      "name": formData.name,
+      "last_name": formData.surname,
+      "password": formData.password,
+      "image": profilePicture // Assuming profilePicture is a File object
+    };
+    
+    try {
+      const response = await api.signup(dataConfirmed);
+      
+      if (response.status === 201) {
+        alert('User created successfully');
+        console.log(response.data);
+      }
+    } catch (error) {
+      alert('Error:', error);
+    }
   };
+
 
   return (
     <div className='container'>

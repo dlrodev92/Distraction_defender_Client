@@ -1,13 +1,18 @@
 import '../scss/weblist-item.scss';
-import arrowDown from '../assets/icons/down-arrow.svg';
+import deleteIcon from '../assets/icons/delete.svg';
 
 const WeblistItem = (props) =>{
     return(
         <div className='weblistItem-container'>
-             <h3>{props.title}</h3>
-             <button>
-                <img src={arrowDown} alt="arrowdown icon" />
-             </button>
+             <div className='title-weblistItem-container'>
+                <h3>{props.title}</h3>
+                <button>
+                    <img src={deleteIcon} alt="arrowdown icon" />
+                </button>
+             </div>
+             <ul className='websites-weblistItem-container'>
+                {props.websites}
+             </ul>
         </div>
     )
 }

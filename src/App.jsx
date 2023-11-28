@@ -1,18 +1,19 @@
-import Login from './pages/Login'
-import Signup from './pages/Signup'
-import Dashboard from './pages/Dashboard'
-import './scss/global-variables.scss'
-
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+import { RequireAuth } from './context/ProtectedRoute'; // Assuming this is your authentication wrapper
 
 function App() {
-
   return (
-    <>
-    <Dashboard />
-    <Signup />
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
