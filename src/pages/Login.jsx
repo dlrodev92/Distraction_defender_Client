@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import { useAuthContext }   from '../context/useAuthContext';
 import '../scss/login.scss';
-
+import { useEffect } from 'react';
 
 const Login = () => {
   const Navigate = useNavigate();
@@ -31,7 +31,11 @@ const handleLogin = async (e) => {
 
     if (response.status === 200) {
       const token = response.data.token; 
-      Cookies.set('token', token,);
+      const refresh_token = response.data.refresh_token;
+
+      
+      Cookies.set('token', token, { expires: 7, path: '/' });
+      Cookies.set('refresh_token', refresh_token, { expires: 7, path: '/' });
       dispatch({ type: 'LOGIN', payload: { user: response.data.user, token: token } });
 
       alert('Login successful');
@@ -51,6 +55,26 @@ const handleLogin = async (e) => {
     }
   }
 };
+
+const verifyToken = async () => {
+  // Check the validity of the token on the server-side
+  // If the token is invalid, handle it accordingly
+  try {
+    const response = await api.verifyToken();
+    if (response.status == 200) {
+      // Token is invalid, clear the cookies and logout the user
+      Cookies.remove('token');
+      Cookies.remove('refresh_token');
+      dispatch({ type: 'LOGOUT' });
+    }                                                 
+  } catch (error) {
+    console.error('Token verification failed:', error);
+  }
+};
+
+
+
+console.log('token: ', Cookies.get('token'));
 
   return (
     <div className='container'>

@@ -52,7 +52,12 @@ class Api {
     });
   }
 
-  // Other API functions...
+  verifyToken() {
+    this._setAuthHeaders();
+    return this.axiosInstanceWithAuth.get('/api/token/verify');
+  }
+
+  
 }
 
 const api = new Api();

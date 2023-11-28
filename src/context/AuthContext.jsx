@@ -7,14 +7,12 @@ export const authReducer = (state, action) => {
         case 'LOGIN':
             return {
                 ...state,
-                isAuthenticated: true,
                 user: action.payload.user,
                 token: action.payload.token
             };
         case 'LOGOUT':
             return {
                 ...state,
-                isAuthenticated: false,
                 user: null,
                 token: null
             };
@@ -27,7 +25,6 @@ export const authReducer = (state, action) => {
  export const AuthContextProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(authReducer, {
-        isAuthenticated: false,
         user: null,
         token: null
     });

@@ -5,7 +5,7 @@ export function RequireAuth({ children }) {
   const auth = useAuthContext(); // Move the hook call inside the component
   const location = useLocation();
 
-  if (!auth.isAuthenticated) {
+  if (!auth.token) {
     return <Navigate to="/" state={{ from: location }} />;
   }
 
@@ -14,7 +14,7 @@ export function RequireAuth({ children }) {
 
 export function PrivateRoute({ children }) {
   const auth = useAuthContext(); // Retrieve authentication status inside the component
-  const authed = auth.isAuthenticated;
+  const authed = auth.token;
 
   return authed ? children : <Navigate to="/" />;
 }
