@@ -4,13 +4,41 @@ import shutdownIcon from '../assets/icons/shutdown.svg';
 import saveIcon from '../assets/icons/save.svg';
 import exitIcon from '../assets/icons/exit.svg';
 import Input from '../components/Input';
+import api from '../api/api';
+import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
+import { useAuthContext }   from '../context/useAuthContext';
 import { useState } from 'react';
 import { MagicMotion } from "react-magic-motion";
 const UserDashboard = () =>{
     const [isEdit, setIsEdit] = useState(false);
+    const Navigate = useNavigate();
+    const { dispatch } = useAuthContext();
+  
+
+    const logout = async () => {
+        try {
+          const token = Cookies.get('refresh_token');
+          const response = await api.logout(token);
+      
+          if (response.success) {
+            Cookies.remove('refresh_token');
+            Cookies.remove('access_token');
+            Cookies.remove('user');
+            dispatch({ type: 'LOGOUT' });
+            Navigate('/');
+          } else {
+            // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
+            console.error('Error during logout:', response.error);
+          }
+        } catch (error) {
+          // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
+          console.error('An unexpected error occurred during logout:', error);
+        }
+      };
+
 
     const toogleEdit = () =>{
-
         setIsEdit(!isEdit);
     }
 
@@ -50,7 +78,7 @@ const UserDashboard = () =>{
             <button className='edit-button' onClick={toogleEdit}>
                 <img src={editIcon} alt="editIcon"/>
             </button>
-            <button className='shutdown-button'>
+            <button className='shutdown-button' onClick={logout}>
                 <img src={shutdownIcon} alt="shutdownIcon"/>
             </button>
             </div>

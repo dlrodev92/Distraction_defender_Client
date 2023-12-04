@@ -1,9 +1,11 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+
 class Api {
+  
   constructor() {
-    this.API_BASE_URL = 'https://distraction-defender-server.onrender.com';
+    this.API_BASE_URL = 'http://127.0.0.1:8000/';
 
     this.axiosInstance = axios.create({
       baseURL: this.API_BASE_URL,
@@ -18,30 +20,48 @@ class Api {
   }
 
   _setAuthHeaders() {
-    const token = Cookies.get('token');
+    const token = Cookies.get('access_token');
     if (token) {
       this.axiosInstanceWithAuth.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
   }
 
-  login(userData) {
-    return new Promise((resolve, reject) => {
-      this.axiosInstance.post('/login/', userData, {
+  refreshToken(refresh){
+    return this.axiosInstanceWithAuth.post('/api/token/refresh/', { refresh: refresh },);
+  }
+
+  
+  async login(userData) {
+    try {
+     const response = await this.axiosInstance.post('/login/', userData, {
         headers: {
           'Content-Type': 'application/json',
         }
-      })
-      .then(response => {
-        resolve(response); // Resolve with the response for successful requests
-      })
-      .catch(error => {
-        if (error.response && error.response.status === 400) {
-          reject(new Error('Invalid credentials')); // Reject with specific error message for invalid credentials
-        } else {
-          reject(error); // Reject with the original error for other cases
-        }
       });
-    });
+      if (response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      } else {
+        return {
+          success: false,
+          error: 'An error occurred during login',
+        };
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        return {
+          success: false,
+          error: 'Invalid credentials',
+        };
+      } else {
+        return {
+          success: false,
+          error: 'An error occurred',
+        };
+      }
+    }
   }
 
   signup(userData) {
@@ -52,9 +72,31 @@ class Api {
     });
   }
 
-  verifyToken() {
+  async logout(refreshToken) {
+    try {
+      const response = await this.axiosInstanceWithAuth.post('/logout/', {'token': refreshToken});
+      if (response.status === 200) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      } else {
+        return {
+          success: false,
+          error: 'An error occurred during logout',
+        };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        error: 'An error occurred',
+      };
+    }
+  }
+
+  getUserProfile() {
     this._setAuthHeaders();
-    return this.axiosInstanceWithAuth.get('/api/token/verify');
+    return this.axiosInstanceWithAuth.get('/api/users/');
   }
 
   

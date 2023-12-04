@@ -7,74 +7,78 @@ import { useAuthContext }   from '../context/useAuthContext';
 import '../scss/login.scss';
 import { useEffect } from 'react';
 
+
 const Login = () => {
   const Navigate = useNavigate();
   
   const { dispatch } = useAuthContext();
 
-  const [userLogin, setUserLogin] = useState({
+  const [userLoginData, setUserLogin] = useState({
     username: '',
     password: '',
   });
 
   const handleUserLogin = (e) => {
     setUserLogin({
-      ...userLogin,
+      ...userLoginData,
       [e.target.name]: e.target.value,
     });
   };
 
+
 const handleLogin = async (e) => {
   e.preventDefault();
-  try {
-    const response = await api.login(userLogin);
+  const loginResult = await api.login(userLoginData); // Llama a la función de inicio de sesión
 
-    if (response.status === 200) {
-      const token = response.data.token; 
-      const refresh_token = response.data.refresh_token;
+  if (loginResult.success) {
+    const token = loginResult.data.token; 
+    const refresh_token = loginResult.data.refresh_token;
+    const user = loginResult.data.user.username;
 
-      
-      Cookies.set('token', token, { expires: 7, path: '/' });
-      Cookies.set('refresh_token', refresh_token, { expires: 7, path: '/' });
-      dispatch({ type: 'LOGIN', payload: { user: response.data.user, token: token } });
+    Cookies.set('access_token', token, { expires: 7, path: '/' });
+    Cookies.set('refresh_token', refresh_token, { expires: 7, path: '/' });
+    Cookies.set('user', user, { expires: 7, path: '/' }); 
+    dispatch({ type: 'LOGIN', payload: { user: loginResult.data.user, token: token, refreshToken: refresh_token } });
+    Navigate('/dashboard');
 
-      alert('Login successful');
+  } else {
+    alert(loginResult.error)
+  }
 
-      if (Cookies.get('token')) {
-      setTimeout(() => {
+};
+
+const checkToken = async () => {
+  const token = Cookies.get('refresh_token');
+  console.log("token:", token);
+
+  if (token) {
+    try {
+      const response = await api.refreshToken(token);
+
+      if (response.status === 200) {
+        Cookies.set('refresh_token', response.data.refresh, { expires: 7, path: '/' });
+        Cookies.set('access_token', response.data.access, { expires: 7, path: '/' });
+
+        const user = Cookies.get("user");
+        dispatch({ type: 'LOGIN', payload: { user, token: response.data.access, refreshToken: response.data.refresh } });
+
         Navigate('/dashboard');
-      }, 1000);
+      } else {
+        Cookies.remove('refresh_token');
+        Cookies.remove('access_token');
+        Cookies.remove('user');
+        dispatch({ type: 'LOGOUT' });
+        console.log('Token expired or not valid');
       }
-
-    }
-  } catch (error) {
-    if (error.message === 'Invalid credentials') {
-      alert('Invalid credentials, try again');
-    } else {
-      alert('Unexpected error occurred');
+    } catch (error) {
+      console.error('Error refreshing token:', error);
     }
   }
 };
 
-const verifyToken = async () => {
-  // Check the validity of the token on the server-side
-  // If the token is invalid, handle it accordingly
-  try {
-    const response = await api.verifyToken();
-    if (response.status == 200) {
-      // Token is invalid, clear the cookies and logout the user
-      Cookies.remove('token');
-      Cookies.remove('refresh_token');
-      dispatch({ type: 'LOGOUT' });
-    }                                                 
-  } catch (error) {
-    console.error('Token verification failed:', error);
-  }
-};
-
-
-
-console.log('token: ', Cookies.get('token'));
+useEffect(() => {
+  checkToken();
+}, []);
 
   return (
     <div className='container'>

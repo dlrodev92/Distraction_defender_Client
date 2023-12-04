@@ -8,13 +8,16 @@ export const authReducer = (state, action) => {
             return {
                 ...state,
                 user: action.payload.user,
-                token: action.payload.token
+                token: action.payload.token,
+                refreshToken: action.payload.refreshToken
+
             };
         case 'LOGOUT':
             return {
                 ...state,
                 user: null,
-                token: null
+                token: null,
+                refreshToken: null
             };
         default:
             return state;
@@ -26,7 +29,8 @@ export const authReducer = (state, action) => {
 
     const [state, dispatch] = useReducer(authReducer, {
         user: null,
-        token: null
+        token: null,
+        refreshToken: null
     });
 
     console.log('AuthProvider state: ', state);
