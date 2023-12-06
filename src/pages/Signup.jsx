@@ -17,7 +17,6 @@ const Signup = () => {
   const [profilePicture, setProfilePicture] = useState(null);
 
   const handleChange = (event) =>{
-    event.preventDefault();
     setFormData({
       ...formData,
       [event.target.name]: event.target.value

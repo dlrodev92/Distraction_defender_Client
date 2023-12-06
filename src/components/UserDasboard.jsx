@@ -10,11 +10,25 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext }   from '../context/useAuthContext';
 import { useState } from 'react';
 import { MagicMotion } from "react-magic-motion";
-const UserDashboard = () =>{
+const UserDashboard = ({userData,}) =>{
     const [isEdit, setIsEdit] = useState(false);
+    const [userImage, setUserImage] = useState("");
+
+    const [userFormData, setUserFormData] = useState({  
+        current_password: "",
+        new_password: "",
+        username: "",
+     });
+
+
+     const handleUserImage = (event) =>{
+        event.preventDefault();
+        setUserImage(event.target.files[0]);
+      }
+
     const Navigate = useNavigate();
     const { dispatch } = useAuthContext();
-  
+    
 
     const logout = async () => {
         try {
@@ -28,11 +42,9 @@ const UserDashboard = () =>{
             dispatch({ type: 'LOGOUT' });
             Navigate('/');
           } else {
-            // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
             console.error('Error during logout:', response.error);
           }
         } catch (error) {
-          // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
           console.error('An unexpected error occurred during logout:', error);
         }
       };
@@ -42,24 +54,59 @@ const UserDashboard = () =>{
         setIsEdit(!isEdit);
     }
 
+    const handleUserFormChange = (event) =>{
+        setUserFormData({
+            ...userFormData,
+            [event.target.name]: event.target.value
+          })
+    }
+
+    const handleSubmitEditUserForm = async (event) => {
+        event.preventDefault();
+        try {
+            // Ensure userFormData.image is a File object representing the uploaded image
+            const dataConfirmed = {
+                username: userFormData.username,
+                current_password: userFormData.current_password,
+                new_password: userFormData.new_password,
+                image: userImage  // Set to empty sting if image is undefined
+            };
+    
+            const response = await api.updateUserProfile(dataConfirmed);
+    
+            if (response.success) {
+                alert('User updated successfully');
+                console.log('Response data:', response.data);
+                Navigate('/dashboard');
+            } else {
+                console.error('Error updating user profile:', response.error);
+                alert('Failed to update user profile. Check the console for details.');
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+            alert('An error occurred while updating the user profile. Check the console for details.');
+        }
+    };
+
+
     return(
     <MagicMotion transition={{ type: "spring", stiffness: 100, damping: 12 }}>
     <div className='user-dashboard-container'>
         {isEdit?
         (
         <>
-            <div className="user-edit-container">
-                <Input label='Username' name='username'/>
-                <Input label='Email' type='email' name='email'/>
-                <Input label='Password' type='password' name='password'/>
-                <input className='picture-input' type="file" name="profile_picture" accept='.jpg, .png, .jpeg'/>
-            </div>
+            <form className="user-edit-container">
+                <Input label='Username' name='username' onChange={handleUserFormChange}/>
+                <Input label='Current Password' type='email' name='current_password' onChange={handleUserFormChange}/>
+                <Input label='New Password' type='password' name='new_password' onChange={handleUserFormChange}/>
+                <input className='picture-input' type="file" name="image" accept='.jpg, .png, .jpeg' onChange={handleUserImage}/>
+            </form>
             <div className='buttons-container'>
             <button className='getback-button' onClick={toogleEdit}>
                 <img src={exitIcon} alt="getback"/>
             </button>
             <button className='save-button'>
-                <img src={saveIcon} alt="getback"/>
+                <img src={saveIcon} alt="getback" onClick={handleSubmitEditUserForm}/>
             </button>
             </div>
         </>
@@ -70,8 +117,8 @@ const UserDashboard = () =>{
         (
         <>
             <div className="userImage-container">
-                <img src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" alt="userImage" />
-                <h2>User Name</h2>
+                <img src={userData.ProfilePicture} alt="userImage" />
+                <h2>{userData.Username}</h2>
             </div>
 
             <div className='buttons-container'>

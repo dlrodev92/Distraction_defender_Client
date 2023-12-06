@@ -94,14 +94,26 @@ class Api {
     }
   }
 
-  getUserProfile() {
+  async getUserProfile() {
     this._setAuthHeaders();
-    return this.axiosInstanceWithAuth.get('/api/users/');
+    const response = await this.axiosInstanceWithAuth.get('/api/users/');
+    return response
+  }
+
+  async updateUserProfile(userData) {
+    this._setAuthHeaders();
+    const userId = Cookies.get('userId')
+    return await this.axiosInstanceWithAuth.patch(`/api/users/${userId}/`, userData,{
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      }
+    });
   }
 
   
-}
+  }
 
+  
 const api = new Api();
 
 export default api;

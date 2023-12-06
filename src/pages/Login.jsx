@@ -33,11 +33,11 @@ const handleLogin = async (e) => {
   if (loginResult.success) {
     const token = loginResult.data.token; 
     const refresh_token = loginResult.data.refresh_token;
-    const user = loginResult.data.user.username;
+    const userId = loginResult.data.user.id;
 
     Cookies.set('access_token', token, { expires: 7, path: '/' });
     Cookies.set('refresh_token', refresh_token, { expires: 7, path: '/' });
-    Cookies.set('user', user, { expires: 7, path: '/' }); 
+    Cookies.set('userId', userId, { expires: 7, path: '/' }); 
     dispatch({ type: 'LOGIN', payload: { user: loginResult.data.user, token: token, refreshToken: refresh_token } });
     Navigate('/dashboard');
 

@@ -7,6 +7,7 @@ const Input = (props) => {
       <input
         type={props.type || 'text'}
         name={props.name}
+        value={props.value}
         onChange={props.onChange}
       />
     </div>
