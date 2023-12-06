@@ -103,11 +103,25 @@ class Api {
   async updateUserProfile(userData) {
     this._setAuthHeaders();
     const userId = Cookies.get('userId')
-    return await this.axiosInstanceWithAuth.patch(`/api/users/${userId}/`, userData,{
+    const response =  await this.axiosInstanceWithAuth.patch(`/api/users/${userId}/`, userData,{
       headers: {
         'Content-Type': 'multipart/form-data',
       }
     });
+    
+    if(response.status === 200){
+      return {
+        success: true,
+        data: response.data,
+      };}
+
+    if(response.status === 400){
+      return {
+        success: false,
+        error: response.data,
+      };
+    }
+    
   }
 
   

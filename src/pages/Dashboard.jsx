@@ -12,6 +12,13 @@ function Dashboard() {
       Email: "",
       ProfilePicture: "",
     });
+
+    const [isUserEdit, setIsUserEdit] = useState(false);
+
+    const toogleUserEdit = (value) =>{
+      setIsUserEdit(value);
+    };
+
     
     const getUserData = async () => {
       try {
@@ -31,11 +38,13 @@ function Dashboard() {
 
     useEffect(() =>{
         getUserData();
-    },[]);
+        setIsUserEdit(false);
+    },[isUserEdit]);
+
 
     return (
       <div className="dashboard-container">
-        <UserDashboard userData={userData} />
+        <UserDashboard userData={userData} toogleUserEdit={toogleUserEdit} />
         <MainDashboard/>
         <PomodoroDashboard/>
         <WeblistDashboard/>

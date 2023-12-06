@@ -10,9 +10,11 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext }   from '../context/useAuthContext';
 import { useState } from 'react';
 import { MagicMotion } from "react-magic-motion";
-const UserDashboard = ({userData,}) =>{
+
+
+const UserDashboard = ({userData, toogleUserEdit}) =>{
     const [isEdit, setIsEdit] = useState(false);
-    const [userImage, setUserImage] = useState("");
+    const [userImage, setUserImage] = useState(null);
 
     const [userFormData, setUserFormData] = useState({  
         current_password: "",
@@ -63,30 +65,29 @@ const UserDashboard = ({userData,}) =>{
 
     const handleSubmitEditUserForm = async (event) => {
         event.preventDefault();
+        const dataConfirmed = {
+          username: userFormData.username,
+          current_password: userFormData.current_password,
+          new_password: userFormData.new_password,
+          image: userImage
+        };
+    
         try {
-            // Ensure userFormData.image is a File object representing the uploaded image
-            const dataConfirmed = {
-                username: userFormData.username,
-                current_password: userFormData.current_password,
-                new_password: userFormData.new_password,
-                image: userImage  // Set to empty sting if image is undefined
-            };
+          const response = await api.updateUserProfile(dataConfirmed);
     
-            const response = await api.updateUserProfile(dataConfirmed);
-    
-            if (response.success) {
-                alert('User updated successfully');
-                console.log('Response data:', response.data);
-                Navigate('/dashboard');
-            } else {
-                console.error('Error updating user profile:', response.error);
-                alert('Failed to update user profile. Check the console for details.');
-            }
+          if (response.success) {
+            alert('User profile updated successfully!');
+            setIsEdit(!isEdit);
+            toogleUserEdit(true);
+          } else {
+            alert(response.error);
+            console.log(response.error);
+          }
         } catch (error) {
-            console.error('An error occurred:', error);
-            alert('An error occurred while updating the user profile. Check the console for details.');
+          alert('An error occurred while updating user profile.');
+          console.error(error);
         }
-    };
+      };
 
 
     return(
