@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import Input from '../components/Input';
 import '../scss/signup.scss';
+import{useNavigate} from 'react-router-dom';
 import api from '../api/api';
 
 const Signup = () => {
+
+  const Navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name:'',
@@ -37,26 +40,43 @@ const Signup = () => {
     }
   
     const dataConfirmed = {
-      "username": formData.username,
-      "email": formData.email,
-      "name": formData.name,
-      "last_name": formData.surname,
-      "password": formData.password,
-      "image": profilePicture // Assuming profilePicture is a File object
+      username: formData.username,
+      email: formData.email,
+      name: formData.name,
+      last_name: formData.surname,
+      password: formData.password,
+      image: profilePicture instanceof File ? profilePicture : null,
     };
-    
+  
     try {
       const response = await api.signup(dataConfirmed);
-      
-      if (response.status === 201) {
-        alert('User created successfully');
-        console.log(response.data);
+  
+      if (response.success) {
+        alert('Account created successfully. You can now log in.');
+        Navigate('/')
+      } else {
+        alert(`Error: ${response.error}`);
+        
       }
     } catch (error) {
-      alert('Error:', error);
+      console.error('An error occurred during the request:', error);
+  
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+        console.error('Response headers:', error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up the request:', error.message);
+      }
     }
+  
+      alert(`Error: chekc the console for more information`);
   };
-
 
   return (
     <div className='container'>

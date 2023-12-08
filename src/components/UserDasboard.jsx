@@ -89,10 +89,10 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
         }
       };
 
-
+ 
     return(
-    <MagicMotion transition={{ type: "spring", stiffness: 100, damping: 12 }}>
-    <div className='user-dashboard-container'>
+    // <MagicMotion transition={{ type: "spring", stiffness: 100, damping: 12 }}>
+      <div className='user-dashboard-container'>
         {isEdit?
         (
         <>
@@ -135,7 +135,7 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
         }
 
     </div>
-    </MagicMotion>
+    // </MagicMotion>
     )
 }
 

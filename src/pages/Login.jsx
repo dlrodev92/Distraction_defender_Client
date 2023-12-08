@@ -38,7 +38,7 @@ const handleLogin = async (e) => {
     Cookies.set('access_token', token, { expires: 7, path: '/' });
     Cookies.set('refresh_token', refresh_token, { expires: 7, path: '/' });
     Cookies.set('userId', userId, { expires: 7, path: '/' }); 
-    dispatch({ type: 'LOGIN', payload: { user: loginResult.data.user, token: token, refreshToken: refresh_token } });
+    dispatch({ type: 'LOGIN', payload: { user: userId, token: token, refreshToken: refresh_token } });
     Navigate('/dashboard');
 
   } else {
@@ -58,9 +58,10 @@ const checkToken = async () => {
       if (response.status === 200) {
         Cookies.set('refresh_token', response.data.refresh, { expires: 7, path: '/' });
         Cookies.set('access_token', response.data.access, { expires: 7, path: '/' });
+        const userId = Cookies.get('user_id');
 
         const user = Cookies.get("user");
-        dispatch({ type: 'LOGIN', payload: { user, token: response.data.access, refreshToken: response.data.refresh } });
+        dispatch({ type: 'LOGIN', payload: { user:userId, token: response.data.access, refreshToken: response.data.refresh } });
 
         Navigate('/dashboard');
       } else {
@@ -89,7 +90,7 @@ useEffect(() => {
           <Input className='login-input' label='Password' type='password' name='password' onChange={handleUserLogin} />
           <button type='submit'>Login</button>
         </form>
-        <a rel='stylesheet' href='#' className='signup-form-link'>
+        <a rel='stylesheet' className='signup-form-link' onClick={() =>{ Navigate('/signup')}}>
           Signup Here
         </a>
       </div>

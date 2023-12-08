@@ -64,12 +64,35 @@ class Api {
     }
   }
 
-  signup(userData) {
-    return this.axiosInstance.post('/api/users/', userData,{
-      headers: {
-        'Content-Type': 'multipart/form-data',
+  async signup(userData) {
+    console.log('Request Payload:', userData);
+    try {
+      const response = await this.axiosInstance.post('/api/users/', userData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        }
+      });
+  
+      if (response.status === 201) {
+        return {
+          success: true,
+          data: response.data,
+        };
+      } else if (response.status === 400) {
+        
+        return {
+          success: false,
+          error: response.data,
+        };
+      } else {
+        throw new Error(`Unexpected response status: ${response.status}`);
       }
-    });
+    } catch (error) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
   }
 
   async logout(refreshToken) {
@@ -121,8 +144,12 @@ class Api {
         error: response.data,
       };
     }
-    
   }
+
+  async getWeblist(){
+    return this.axiosInstanceWithAuth.get('/api/weblist/');
+  }
+
 
   
   }

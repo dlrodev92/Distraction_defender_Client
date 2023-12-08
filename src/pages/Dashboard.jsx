@@ -13,6 +13,8 @@ function Dashboard() {
       ProfilePicture: "",
     });
 
+    const [userWeblist, setUserWeblist] = useState(null)
+
     const [isUserEdit, setIsUserEdit] = useState(false);
 
     const toogleUserEdit = (value) =>{
@@ -34,20 +36,33 @@ function Dashboard() {
       }
     }
 
-    
+    const getUserWebList = async () => {
+      try {
+          console.log("Fetching user web list...");
+          const response = await api.getWeblist();
+          setUserWeblist(response.data);
+          console.log("User web list:", response.data);
+      } catch (error) {
+          console.error("Error fetching user data:", error);
+      }
+    }
 
     useEffect(() =>{
         getUserData();
         setIsUserEdit(false);
     },[isUserEdit]);
 
+    useEffect(() =>{
+      getUserWebList();
+      
+    },[]);
 
     return (
       <div className="dashboard-container">
         <UserDashboard userData={userData} toogleUserEdit={toogleUserEdit} />
         <MainDashboard/>
         <PomodoroDashboard/>
-        <WeblistDashboard/>
+        <WeblistDashboard webListData={userWeblist}/>
       </div>
     )
   }

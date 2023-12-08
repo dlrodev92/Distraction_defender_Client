@@ -6,7 +6,7 @@ import deleteIcon from "../assets/icons/delete.svg";
 import { useState } from 'react';
 import Input from '../components/Input';
 
-const WeblistDashboard = () =>{
+const WeblistDashboard = ({webListData}) =>{
     const [isEdit, setIsEdit] = useState(false);
 
     const [weblistForm, setWeblistForm] = useState({
@@ -56,6 +56,18 @@ const WeblistDashboard = () =>{
         console.log({title: weblistForm.title ,array: webListArray});
       };
 
+      const getUserWebList = () => {
+        if(webListData){
+        return webListData.map((weblist) => (
+            <WeblistItem key={weblist.id} title={weblist.title} websites={
+                Object.values(weblist.urls_json).map((url) => (
+                    <li key={url}>{url}</li>
+                ))
+            } />
+        ))
+      }
+      };
+
     return(
     <div className='weblist-dashboard-container'>
         <div className='weblist-header'>
@@ -95,12 +107,9 @@ const WeblistDashboard = () =>{
         :
 
      (<>
-        <WeblistItem title="Titulo1" />
-        <WeblistItem title="Titulo2" />
-        <WeblistItem title="Titulo1" />
-        <WeblistItem title="Titulo2" />
-        <WeblistItem title="Titulo1" />
-        <WeblistItem title="Titulo2" />
+        <div className='weblist-container'>
+        {webListData?  getUserWebList() : <h1>There is no weblist</h1>}
+        </div>
     </>
     )}
     </div>)
