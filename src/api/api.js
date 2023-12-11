@@ -150,6 +150,19 @@ class Api {
     return this.axiosInstanceWithAuth.get('/api/weblist/');
   }
 
+  async deleteWeblist(id){
+    return this.axiosInstanceWithAuth.delete(`/api/weblist/${id}`);
+  }
+
+  async createWeblist(weblistData){
+    return this.axiosInstanceWithAuth.post('/api/weblist/', weblistData, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    );
+  }
+
 
   
   }

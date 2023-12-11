@@ -57,6 +57,10 @@
     border: none;
     cursor: pointer;
     background-color: transparent;
+    transition: all 0.3s ;
+}
+.weblistItem-container button:hover{
+    scale:1.2;
 }
 
 .weblistItem-container img{

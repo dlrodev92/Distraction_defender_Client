@@ -6,7 +6,7 @@ const WeblistItem = (props) =>{
         <div className='weblistItem-container'>
              <div className='title-weblistItem-container'>
                 <h3>{props.title}</h3>
-                <button>
+                <button onClick={props.deleteWeblist}>
                     <img src={deleteIcon} alt="arrowdown icon" />
                 </button>
              </div>

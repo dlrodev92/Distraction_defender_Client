@@ -1,5 +1,5 @@
 import UserDashboard from "../components/UserDasboard"
-import PomodoroDashboard from "../components/PomodoroDashboard"
+import HeaderDashboard from "../components/HeaderDashboard"
 import WeblistDashboard from "../components/WeblistDashboard";
 import '../scss/dashboard.scss';
 import MainDashboard from "../components/mainDashboard";
@@ -16,6 +16,8 @@ function Dashboard() {
     const [userWeblist, setUserWeblist] = useState(null)
 
     const [isUserEdit, setIsUserEdit] = useState(false);
+
+    const [isWeblistEdit, setIsWeblistEdit] = useState(false);
 
     const toogleUserEdit = (value) =>{
       setIsUserEdit(value);
@@ -38,10 +40,8 @@ function Dashboard() {
 
     const getUserWebList = async () => {
       try {
-          console.log("Fetching user web list...");
           const response = await api.getWeblist();
           setUserWeblist(response.data);
-          console.log("User web list:", response.data);
       } catch (error) {
           console.error("Error fetching user data:", error);
       }
@@ -52,17 +52,20 @@ function Dashboard() {
         setIsUserEdit(false);
     },[isUserEdit]);
 
-    useEffect(() =>{
+    useEffect(() => {
+      console.log("Fetching user weblist...");
       getUserWebList();
-      
-    },[]);
+      console.log("User weblist effect triggered. isWeblistEdit:", isWeblistEdit);
+      setIsWeblistEdit(false);
+      console.log("User weblist effect: isWeblistEdit after setIsUserEdit(false):", isWeblistEdit);
+    }, [isWeblistEdit]);
 
     return (
       <div className="dashboard-container">
         <UserDashboard userData={userData} toogleUserEdit={toogleUserEdit} />
         <MainDashboard/>
-        <PomodoroDashboard/>
-        <WeblistDashboard webListData={userWeblist}/>
+        <HeaderDashboard/>
+        <WeblistDashboard webListData={userWeblist} setIsWeblistEdit={setIsWeblistEdit} isWeblistEdit={isWeblistEdit}/>
       </div>
     )
   }

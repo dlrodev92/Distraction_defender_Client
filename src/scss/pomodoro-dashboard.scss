@@ -2,16 +2,101 @@
 
 .pomodoro-dashboard-container{
     padding: 10px;
-    background-color: $lighter-tint-3;
-    box-shadow: 1px -1px 87px -53px rgba(79,149,235,0.85);
+    background-color: #2076b436;
     border-radius: $general-radius;
-    grid-column: 3/ span 7;
-    grid-row: 1/ span 1;
+    height: 90%;
+    width: 48%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
 }
 
-@media screen and (max-width: 1100px) {
-    .pomodoro-dashboard-container{
-        grid-row: 2 / span 2;
-        grid-column: 1 / span 9;
-    }
+.pomodoro-dashboard-container h2{
+    color: $darker-shade-3;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.pomodoro-dashboard-container ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.pomodoro-dashboard-container ul button{
+    background-color: $darker-shade-1;
+    border: none;
+    border-radius: $general-radius;
+    padding: 10px;
+    color: $background-color;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+}
+
+.pomodoro-dashboard-container ul button:hover{
+    background-color: $lighter-tint-1;
+    scale: 0.9;
+}
+
+.button-container{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.reset-button{
+    width: 40%;
+    background-color: $darker-shade-3;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    border: none;
+    border-radius: $general-radius;
+    padding: 10px;
+    color: $background-color;
+}
+
+.reset-button:hover{
+    scale: 1.1;
+}
+
+.start-button{
+    width: 40%;
+    background-color: rgb(236, 58, 58);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+    border: none;
+    border-radius: $general-radius;
+    padding: 10px;
+    color: $background-color;
+}
+
+.start-button:hover{
+    scale: 1.1;
+}
+
+.time-container{
+    width: 80%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.time-container h1{
+    font-size: 2.2rem;
+    color: $darker-shade-3;
+    font-weight: 700;
 }

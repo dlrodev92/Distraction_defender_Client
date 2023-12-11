@@ -118,7 +118,9 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
         (
         <>
             <div className="userImage-container">
-                <img src={userData.ProfilePicture} alt="userImage" />
+              <div className='img-wrapper'>
+                <img src={userData.ProfilePicture} alt="userImage"/>
+              </div>
                 <h2>{userData.Username}</h2>
             </div>
 
