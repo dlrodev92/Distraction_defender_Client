@@ -1,5 +1,5 @@
 import '../scss/Pomodoro-dashboard.scss';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 
 const PomodoroDashboard = () => {
   const [selectedElement, setSelectedElement] = useState('pomodoro');
