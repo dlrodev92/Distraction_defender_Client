@@ -2,7 +2,7 @@ import UserDashboard from "../components/UserDasboard"
 import HeaderDashboard from "../components/HeaderDashboard"
 import WeblistDashboard from "../components/WeblistDashboard";
 import '../scss/dashboard.scss';
-import MainDashboard from "../components/mainDashboard";
+import MainDashboard from "../components/MainDashboard";
 import api from "../api/api";
 import { useState, useEffect } from "react";
 
