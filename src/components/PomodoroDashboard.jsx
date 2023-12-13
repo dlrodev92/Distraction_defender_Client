@@ -1,4 +1,4 @@
-import '../scss/Pomodoro-dashboard.scss';
+import '../scss/pomodoro-dashboard.scss';
 import { useState, useRef } from 'react';
 
 const PomodoroDashboard = () => {
