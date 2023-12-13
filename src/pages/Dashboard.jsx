@@ -2,9 +2,10 @@ import UserDashboard from "../components/UserDasboard"
 import HeaderDashboard from "../components/HeaderDashboard"
 import WeblistDashboard from "../components/WeblistDashboard";
 import '../scss/dashboard.scss';
-import MainDashboard from "../components/mainDashboard";
+import ScriptForm from '../components/ScriptForm';
 import api from "../api/api";
 import { useState, useEffect } from "react";
+import TaskManager from './../components/TaskManager';
 
 function Dashboard() {
     const [userData, setUserData] = useState({
@@ -12,11 +13,10 @@ function Dashboard() {
       Email: "",
       ProfilePicture: "",
     });
-
     const [userWeblist, setUserWeblist] = useState(null)
 
+    // theese flags are used to force a rerender of the components
     const [isUserEdit, setIsUserEdit] = useState(false);
-
     const [isWeblistEdit, setIsWeblistEdit] = useState(false);
 
     const toogleUserEdit = (value) =>{
@@ -31,7 +31,7 @@ function Dashboard() {
             Username: response.data.user.username,
             Email: response.data.user.email,
             Password: "",
-            ProfilePicture:`http://127.0.0.1:8000/${response.data.user.image}`
+            ProfilePicture:`http://127.0.0.1:8000/${response.data.user.image}` //TODO: change this to the correct url
           });
       } catch (error) {
           console.error("Error fetching user data:", error);
@@ -47,23 +47,27 @@ function Dashboard() {
       }
     }
 
+    //here we retrieve all the user data on mount
+
     useEffect(() =>{
+
         getUserData();
         setIsUserEdit(false);
+
     },[isUserEdit]);
 
     useEffect(() => {
-      console.log("Fetching user weblist...");
+
       getUserWebList();
-      console.log("User weblist effect triggered. isWeblistEdit:", isWeblistEdit);
       setIsWeblistEdit(false);
-      console.log("User weblist effect: isWeblistEdit after setIsUserEdit(false):", isWeblistEdit);
+
     }, [isWeblistEdit]);
 
     return (
       <div className="dashboard-container">
         <UserDashboard userData={userData} toogleUserEdit={toogleUserEdit} />
-        <MainDashboard/>
+        <ScriptForm/>
+        <TaskManager/>
         <HeaderDashboard/>
         <WeblistDashboard webListData={userWeblist} setIsWeblistEdit={setIsWeblistEdit} isWeblistEdit={isWeblistEdit}/>
       </div>

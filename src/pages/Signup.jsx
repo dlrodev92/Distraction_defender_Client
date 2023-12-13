@@ -38,6 +38,8 @@ const Signup = () => {
       alert('Passwords do not match, please try again');
       return;
     }
+
+    //IMPORTANT NOTE: the backend is expecting a file, not a string, so we need to check if the profile picture is a file or not
   
     const dataConfirmed = {
       username: formData.username,

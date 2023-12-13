@@ -47,6 +47,8 @@ const handleLogin = async (e) => {
 
 };
 
+//Function to check if the token is valid, very important to avoid the user to login every time
+
 const checkToken = async () => {
   const token = Cookies.get('refresh_token');
   console.log("token:", token);

@@ -9,61 +9,61 @@ import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import { useAuthContext }   from '../context/useAuthContext';
 import { useState } from 'react';
-import { MagicMotion } from "react-magic-motion";
+// import { MagicMotion } from "react-magic-motion";
 
 
 const UserDashboard = ({userData, toogleUserEdit}) =>{
-    const [isEdit, setIsEdit] = useState(false);
-    const [userImage, setUserImage] = useState(null);
 
-    const [userFormData, setUserFormData] = useState({  
+  const Navigate = useNavigate();
+  const { dispatch } = useAuthContext();
+
+  //flag to check if the user is editing the profile and render the correct component  
+  const [isEdit, setIsEdit] = useState(false);
+
+  const toogleEdit = () =>{
+    setIsEdit(!isEdit);
+  }
+
+  const [userImage, setUserImage] = useState(null);
+  const [userFormData, setUserFormData] = useState({  
         current_password: "",
         new_password: "",
         username: "",
-     });
+  });
 
 
-     const handleUserImage = (event) =>{
+  const handleUserImage = (event) =>{
         event.preventDefault();
         setUserImage(event.target.files[0]);
-      }
+  }
 
-    const Navigate = useNavigate();
-    const { dispatch } = useAuthContext();
-    
-
-    const logout = async () => {
-        try {
-          const token = Cookies.get('refresh_token');
-          const response = await api.logout(token);
-      
-          if (response.success) {
-            Cookies.remove('refresh_token');
-            Cookies.remove('access_token');
-            Cookies.remove('user');
-            dispatch({ type: 'LOGOUT' });
-            Navigate('/');
+  const logout = async () => {
+    try {
+      const token = Cookies.get('refresh_token');
+      const response = await api.logout(token);
+        if (response.success) {
+          Cookies.remove('refresh_token');
+          Cookies.remove('access_token');
+          Cookies.remove('user');
+          dispatch({ type: 'LOGOUT' });
+          Navigate('/');
           } else {
             console.error('Error during logout:', response.error);
           }
         } catch (error) {
           console.error('An unexpected error occurred during logout:', error);
         }
-      };
+    };
 
 
-    const toogleEdit = () =>{
-        setIsEdit(!isEdit);
-    }
-
-    const handleUserFormChange = (event) =>{
+  const handleUserFormChange = (event) =>{
         setUserFormData({
             ...userFormData,
             [event.target.name]: event.target.value
           })
-    }
+  }
 
-    const handleSubmitEditUserForm = async (event) => {
+  const handleSubmitEditUserForm = async (event) => {
         event.preventDefault();
         const dataConfirmed = {
           username: userFormData.username,
@@ -72,22 +72,22 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
           image: userImage
         };
     
-        try {
-          const response = await api.updateUserProfile(dataConfirmed);
+      try {
+        const response = await api.updateUserProfile(dataConfirmed);
     
-          if (response.success) {
-            alert('User profile updated successfully!');
-            setIsEdit(!isEdit);
-            toogleUserEdit(true);
-          } else {
-            alert(response.error);
-            console.log(response.error);
-          }
-        } catch (error) {
-          alert('An error occurred while updating user profile.');
-          console.error(error);
+        if (response.success) {
+          alert('User profile updated successfully!');
+          setIsEdit(!isEdit);
+          toogleUserEdit(true);
+        } else {
+          alert(response.error);
+          console.log(response.error);
         }
-      };
+      } catch (error) {
+        alert('An error occurred while updating user profile.');
+        console.error(error);
+      }
+    };
 
  
     return(
