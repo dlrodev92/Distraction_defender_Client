@@ -3,12 +3,13 @@ import WeblistItem from './WebListItem';
 import plusIcon from "../assets/icons/plus.svg";
 import exitIcon from "../assets/icons/exit.svg";
 import deleteIcon from "../assets/icons/delete.svg";
+import shield from "../assets/icons/shield.svg";
 import { useState } from 'react';
 import Input from '../components/Input';
 import api from "../api/api";
 import { v4 as uuidv4 } from 'uuid';
 
-const WeblistDashboard = ({webListData, setIsWeblistEdit, isWeblistEdit}) =>{
+const WeblistDashboard = ({webListData, setIsWeblistEdit, isWeblistEdit, handleSetWeblistShare, toogleScriptEdit}) =>{
     const [isEdit, setIsEdit] = useState(false);
 
     const [weblistForm, setWeblistForm] = useState({
@@ -21,6 +22,10 @@ const WeblistDashboard = ({webListData, setIsWeblistEdit, isWeblistEdit}) =>{
     const toogleEdit = () =>{
         setIsEdit(!isEdit);
     }
+
+    const handleToggleScriptEdit = () => {
+      toogleScriptEdit(true); 
+    };
 
     const showWeblistArray = () => {
         return webListArray.map((weblist) => (
@@ -68,9 +73,14 @@ const WeblistDashboard = ({webListData, setIsWeblistEdit, isWeblistEdit}) =>{
         }
       };
 
-      
 
-      const getUserWebList = () => {
+// We recive the list object and get the values of it to set the weblistShare
+const handleShare = (weblist) => {
+  const websites = weblist.urls_json ? Object.values(weblist.urls_json) : [];
+  handleSetWeblistShare(websites);
+};
+
+  const getUserWebList = () => {
         if (webListData) {
           return webListData.map((weblist) => (
             <WeblistItem
@@ -84,6 +94,7 @@ const WeblistDashboard = ({webListData, setIsWeblistEdit, isWeblistEdit}) =>{
                   : []
               }
               deleteWeblist={() => deleteWeblist(weblist.id)}
+              shareWeblist={() => handleShare(weblist)}
             />
           ));
         }
@@ -130,20 +141,23 @@ const WeblistDashboard = ({webListData, setIsWeblistEdit, isWeblistEdit}) =>{
 
     return(
     <div className='weblist-dashboard-container'>
-        <div className='weblist-header'>
-            {isEdit?
-            (<h1>Create Weblists</h1>)
-            :
-            (<h1>My Weblist</h1>)
-            } 
+        {isEdit?
+        (<div className='weblist-header'>
+            <h3>Back To Weblists</h3>
             <button onClick={toogleEdit}>
-            {isEdit?
-            (<img src={exitIcon} alt="plus icon" />)
-            :
-            (<img src={plusIcon} alt="exit icon" />)
-            }   
+            <img src={exitIcon} alt="plus icon" />
             </button>
-        </div>
+        </div>):
+        (<div className='weblist-header'>
+          <h3>Create a Defender</h3>
+            <button onClick={handleToggleScriptEdit}>
+            <img src={shield} alt="plus icon" />
+            </button>
+           <h3>Create Weblists</h3>
+            <button onClick={toogleEdit}>
+            <img src={exitIcon} alt="plus icon" />
+            </button>
+        </div>)}
     {isEdit ? 
         (
         <>

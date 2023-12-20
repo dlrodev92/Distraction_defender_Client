@@ -162,6 +162,27 @@ class Api {
     }
     );
   }
+  
+  async createDefender(defenderData){
+    const response = await this.axiosInstanceWithAuth.post('script/', defenderData, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }
+    );
+    if(response.status === 200){
+      return {
+        success: true,
+        data: response.data,
+      };}
+    if(response.status === 400){  
+      return {
+        success: false,
+        error: response.data,
+      };
+    }
+
+  }
 
 
   

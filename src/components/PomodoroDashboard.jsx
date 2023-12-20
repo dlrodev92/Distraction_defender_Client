@@ -7,8 +7,6 @@ const PomodoroDashboard = () => {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
-  console.log("minutes :" + minutes);
-
   const id = useRef();
 
   const handleIsRunning = () => {

@@ -2,7 +2,7 @@
 
 .weblistItem-container{
     width: 90%;
-    height: 130px;
+    height: 140px;
     background-color: $background-color;
     border-radius: $general-radius;
     box-shadow: 1px -1px 87px -53px rgba(10, 13, 16, 0.85);
@@ -15,7 +15,7 @@
 
 .title-weblistItem-container{
     width: 100%;
-    height: 30%;
+    height: 20%;
     display:flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -37,7 +37,9 @@
 
 .websites-weblistItem-container li{
     list-style: none;
-    padding: 5px;
+    padding: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
     border-radius: $general-radius;
     background-color: $background-color;
     box-shadow: 1px -1px 87px -53px rgba(10, 13, 16, 0.85);
@@ -51,7 +53,7 @@
     cursor: pointer;
 }
 .weblistItem-container button{
-    width: 10%;
+    width: 7%;
     padding: 5px;
     border-radius: $general-radius;
     border: none;
@@ -65,4 +67,15 @@
 
 .weblistItem-container img{
     height: 50%;
+}
+
+.share-button{
+    background-color: $lighter-tint-2;
+    background-color: #EC3A3A !important;
+    width: 20% !important;
+    height: 20% !important;
+    margin-top: 5px !important;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ;
 }

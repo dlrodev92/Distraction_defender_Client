@@ -8,6 +8,12 @@ import { useState, useEffect } from "react";
 import TaskManager from './../components/TaskManager';
 
 function Dashboard() {
+    const [weblistShare, setWeblistShare] = useState([])
+
+    const handleSetWeblistShare = (value) =>{
+      setWeblistShare((prev) => [...prev, value])
+    }
+
     const [userData, setUserData] = useState({
       Username: "",
       Email: "",
@@ -18,9 +24,14 @@ function Dashboard() {
     // theese flags are used to force a rerender of the components
     const [isUserEdit, setIsUserEdit] = useState(false);
     const [isWeblistEdit, setIsWeblistEdit] = useState(false);
+    const [isScriptEdit, setIsScriptEdit] = useState(false);
 
     const toogleUserEdit = (value) =>{
       setIsUserEdit(value);
+    };
+
+    const toogleScriptEdit = (value) =>{
+      setIsScriptEdit(value);
     };
 
     
@@ -66,10 +77,22 @@ function Dashboard() {
     return (
       <div className="dashboard-container">
         <UserDashboard userData={userData} toogleUserEdit={toogleUserEdit} />
-        <ScriptForm/>
         <TaskManager/>
         <HeaderDashboard/>
-        <WeblistDashboard webListData={userWeblist} setIsWeblistEdit={setIsWeblistEdit} isWeblistEdit={isWeblistEdit}/>
+        {isScriptEdit ? (
+            <ScriptForm 
+            weblistShare={weblistShare}
+            toogleScriptEdit={toogleScriptEdit}
+            />
+          ) : (
+            <WeblistDashboard 
+              webListData={userWeblist} 
+              setIsWeblistEdit={setIsWeblistEdit} 
+              isWeblistEdit={isWeblistEdit} 
+              handleSetWeblistShare={handleSetWeblistShare} 
+              toogleScriptEdit={toogleScriptEdit}
+            />
+          )}  
       </div>
     )
   }

@@ -4,7 +4,7 @@
     background-color: $lighter-tint-3;
     box-shadow: 1px -1px 87px -53px rgba(79,149,235,0.85);
     border-radius: $general-radius;
-    grid-column: 1/ span 2;
+    grid-column: 7/ span 3;
     grid-row: 2/ span 4;
     display: flex;
     flex-direction:column;
@@ -18,7 +18,7 @@
     background-color: $darker-shade-1;
     border: none;
     border-radius: $general-radius;
-    padding: 10px;
+    padding: 5px;
     color: $background-color;
     font-size: 1rem;
     font-weight: 700;
@@ -29,6 +29,33 @@
         scale: 0.9;
     }
 }
+
+.script-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+  
+    button {
+      background-color: $darker-shade-1;
+      border: none;
+      border-radius: $general-radius;
+      padding: 5px;
+      color: $background-color;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.4s ease-in-out;
+      background-color: $lighter-tint-3 !important;
+    }
+
+    img{
+        width: 25px;
+        cursor: pointer;
+    }
+  }
 
 .script-form-container form{
     width: 100%;
@@ -96,7 +123,7 @@
 }
 
 .website-list-delete-button img{
-    width: 100%;
+    width: 50%;
 }
 
 .website-list-delete-button{
@@ -118,7 +145,7 @@
 
 .websitesList-add-button{
     margin-top: 28px;
-    width: 12%;
+    width: 6%;
     background-color: transparent;
     border: none;
     cursor: pointer;
