@@ -1,0 +1,140 @@
+@import './global-variables.scss';
+
+.task-item-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.task-item-container-info{
+    width: 85%;
+    height: 55px;
+    background-color: $background-color;
+    border-radius: $general-radius;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    gap: 10px;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 3px solid transparent;
+        border-radius: $general-radius;
+        transition: border-color 0.5s ease-in-out;
+      }
+    
+      &:hover::before {
+        border-color:$darker-shade-3; 
+      }
+    
+}
+
+.task-item-container-info > *{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.completed-circle{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: $background-color;
+    border: 2px solid $darker-shade-3;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+
+    &:hover{
+        scale: 1.1;
+    }
+}
+
+.task-item-container-complete{
+    width: 15%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+    button{
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        border-radius: $general-radius;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.5s ease-in-out;
+
+        img{
+            width: 20px;
+            height: 20px;
+        }
+
+        &:hover{
+            transform: scale(1.1);
+        }
+    }
+}
+
+.task-item-container-edit{
+    width: 100;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    button{
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+        border-radius: $general-radius;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.5s ease-in-out;
+
+        img{
+            width: 20px;
+            height: 20px;
+        }
+
+        &:hover{
+            transform: scale(1.1);
+        }
+    }
+    input{
+        background-color: $background-color;
+        border: 1px solid $darker-shade-3;
+        padding: 5px;
+        outline: none;
+        border-radius: $general-radius;
+        width: 90%;
+    }
+}
