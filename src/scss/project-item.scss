@@ -1,7 +1,7 @@
 @import './global-variables.scss';
 
 .project-item-container{
-    width: 70%;
+    width: 90%;
     height: 70px;
     background-color: $background-color;
     border-radius: $general-radius;
@@ -30,30 +30,6 @@
       &:hover::before {
         border-color:$background-color;
       }
-
-    button{
-        width: 30px;
-        height: 30px;
-        background-color: $background-color;
-        border-radius: $general-radius;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: all 0.5s ease-in-out;
-
-        img{
-            width: 20px;
-            height: 20px;
-        }
-
-        &:hover{
-            background-color: rgb(241, 239, 239);
-            transform: scale(1.1);
-        }
-    }
 
     h3{
         font-size: 1.5rem;

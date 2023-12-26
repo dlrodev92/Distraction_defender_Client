@@ -9,6 +9,7 @@ const Input = (props) => {
         name={props.name}
         value={props.value}
         onChange={props.onChange}
+        accept={props.accept}
       />
     </div>
   );

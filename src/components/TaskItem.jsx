@@ -2,7 +2,6 @@ import "../scss/task-item.scss";
 import {useState} from "react";
 import deleteIcon from "../assets/icons/delete.svg";
 import saveIcon from "../assets/icons/save.svg"
-import Input from "./Input";
 
 const TaskItem = () =>{
     const [isComplete, setIsComplete] = useState(false);
