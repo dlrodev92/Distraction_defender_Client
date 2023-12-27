@@ -5,11 +5,11 @@
     background-color: $lighter-tint-3;
     box-shadow: 1px -1px 87px -53px rgba(79,149,235,0.85);
     border-radius: $general-radius;
-    grid-column: 1/ span 6;
-    grid-row: 2/ span 4;
+    grid-column: 1/ span 9;
+    grid-row: 3 / span 6;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 10px;
 }
@@ -52,7 +52,7 @@
     border-radius: $general-radius;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     padding: 10px;
@@ -161,19 +161,23 @@
 }
 
 .edit-task-button{
- width: 50px;
- height: 50px;
+ width: 40px;
+ height: 40px;
  cursor: pointer;
  border: none;
  background-color: $lighter-tint-3;
  transition: all 0.5s ease-in-out;
  gap: 10px;
+ padding: 1px;
+ border-radius: 180px;
+ border: 2px solid transparent;
  img{
      width: 70%;
      height: 70%;
  }
  &:hover{
     transform: scale(1.1);
+    border: 2px solid red;
  } 
 }
 

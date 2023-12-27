@@ -3,14 +3,15 @@ import HourSelect from './HourSelect';
 import Input from './Input';
 import {useState} from 'react';
 import deleteIcon from "../assets/icons/delete.svg";
-import exitIcon from "../assets/icons/exit.svg";
 import plusIcon from "../assets/icons/plus.svg";
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 import api from "../api/api";
 
-function ScriptForm({weblistShare, toogleScriptEdit}){
+function ScriptForm({weblistShare}){
     const [web, setWeb] = useState("")
+
+    const [isCreateDefender, setCreateDefender] = useState(false)
 
     const [webSiteListArray, setWebSiteListArray] = useState([]);
 
@@ -95,18 +96,12 @@ function ScriptForm({weblistShare, toogleScriptEdit}){
         handleWebListShare();
     }, [weblistShare]);
 
-    const toogleEdit = () =>{
-        toogleScriptEdit(false);
-    }
+
 
     return(
         <div className='script-form-container'>
-          <div className='script-header'>
-            <h3>Back To Weblist</h3>
-            <button onClick={toogleEdit}>
-            <img src={exitIcon} alt="plus icon" />
-            </button>
-          </div>
+          {
+            isCreateDefender?
             <form onSubmit={handleSubmitForm}>
                 <HourSelect label="From" name="from_hour" onChange={handleDefenderForm}/>
                 <HourSelect label="To" name="to_hour" onChange={handleDefenderForm}/>
@@ -120,8 +115,16 @@ function ScriptForm({weblistShare, toogleScriptEdit}){
                     {showWebSiteListArray()}
                 </ul>
                 <button>Create Your Defender</button>
-                
             </form>
+            :
+            <div className="circle-container">
+              <div className="curved-text">
+                <span>a</span>
+                <span>b</span>
+                <span>c</span>
+              </div>
+            </div>
+            }
         </div>
     )
 }

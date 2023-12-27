@@ -4,9 +4,38 @@
     height: 98vh;
     display: grid;
             grid-template-columns: repeat(9, 1fr);
-            grid-template-rows: repeat(4, 1fr);
+            grid-template-rows: 1fr 0.2fr 1fr 1fr 1fr;
             gap:10px;
     padding: 5px;
+}
+
+.dashboard-toggler{
+    grid-column: 1/ span 9;
+    grid-row: 2 / span 1;
+    padding: 10px;
+    background-color: $lighter-tint-3;
+    box-shadow: 1px -1px 87px -53px rgba(79,149,235,0.85);
+    border-radius: $general-radius;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    button{
+        width: 10%;
+        background-color: $darker-shade-1;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.4s ease-in-out;
+        border: none;
+        border-radius: $general-radius;
+        padding: 10px;
+        color: $background-color;
+        &:hover{
+            background-color: $lighter-tint-1;
+            scale: 0.9;
+        }
+    }
 }
 
 @media screen and (max-width: 1100px) {

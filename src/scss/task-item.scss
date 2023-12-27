@@ -80,14 +80,15 @@
         width: 30px;
         height: 30px;
         background-color: transparent;
-        border-radius: $general-radius;
-        border: none;
+        border-radius: 180px;
+        border: 2px solid transparent;
         outline: none;
         cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
         transition: all 0.5s ease-in-out;
+        
 
         img{
             width: 20px;
@@ -96,6 +97,7 @@
 
         &:hover{
             transform: scale(1.1);
+            border: 2px solid red;
         }
     }
 }

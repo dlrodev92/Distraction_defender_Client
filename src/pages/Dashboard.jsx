@@ -10,6 +10,8 @@ import TaskManager from './../components/TaskManager';
 function Dashboard() {
     const [weblistShare, setWeblistShare] = useState([])
 
+    const [isDashboardToogle, setIsDashboardToogle] = useState("projects");
+
     const handleSetWeblistShare = (value) =>{
       setWeblistShare((prev) => [...prev, value])
     }
@@ -24,15 +26,11 @@ function Dashboard() {
     // theese flags are used to force a rerender of the components
     const [isUserEdit, setIsUserEdit] = useState(false);
     const [isWeblistEdit, setIsWeblistEdit] = useState(false);
-    const [isScriptEdit, setIsScriptEdit] = useState(false);
 
     const toogleUserEdit = (value) =>{
       setIsUserEdit(value);
     };
 
-    const toogleScriptEdit = (value) =>{
-      setIsScriptEdit(value);
-    };
 
     
     const getUserData = async () => {
@@ -77,22 +75,35 @@ function Dashboard() {
     return (
       <div className="dashboard-container">
         <UserDashboard userData={userData} toogleUserEdit={toogleUserEdit} />
-        <TaskManager/>
+        
         <HeaderDashboard/>
-        {isScriptEdit ? (
-            <ScriptForm 
+
+        {/*toggler*/}
+
+        <div className="dashboard-toggler">
+          <button onClick={() => setIsDashboardToogle("projects")}>
+            My Projects
+          </button>
+          <button onClick={() => setIsDashboardToogle("defender")}>
+            My Defender
+          </button>
+        </div>
+
+        {isDashboardToogle === "projects"? 
+         (
+          <TaskManager/>
+         ):
+         (<>
+          <ScriptForm 
             weblistShare={weblistShare}
-            toogleScriptEdit={toogleScriptEdit}
-            />
-          ) : (
-            <WeblistDashboard 
-              webListData={userWeblist} 
-              setIsWeblistEdit={setIsWeblistEdit} 
+          />
+          <WeblistDashboard 
+              webListData={userWeblist}  
               isWeblistEdit={isWeblistEdit} 
               handleSetWeblistShare={handleSetWeblistShare} 
-              toogleScriptEdit={toogleScriptEdit}
-            />
-          )}  
+          />
+       </>)
+        }
       </div>
     )
   }

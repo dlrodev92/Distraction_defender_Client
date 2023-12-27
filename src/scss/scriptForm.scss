@@ -4,58 +4,15 @@
     background-color: $lighter-tint-3;
     box-shadow: 1px -1px 87px -53px rgba(79,149,235,0.85);
     border-radius: $general-radius;
-    grid-column: 7/ span 3;
-    grid-row: 2/ span 4;
+    grid-column: 1/ span 6;
+    grid-row: 3/ span 3;
     display: flex;
     flex-direction:column;
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    padding: 10px;
+    padding: 20px;
 }
-
-.script-form-container button{
-    background-color: $darker-shade-1;
-    border: none;
-    border-radius: $general-radius;
-    padding: 5px;
-    color: $background-color;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.4s ease-in-out;
-    &:hover{
-        background-color: $lighter-tint-1;
-        scale: 0.9;
-    }
-}
-
-.script-header {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    gap: 10px;
-  
-    button {
-      background-color: $darker-shade-1;
-      border: none;
-      border-radius: $general-radius;
-      padding: 5px;
-      color: $background-color;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.4s ease-in-out;
-      background-color: $lighter-tint-3 !important;
-    }
-
-    img{
-        width: 25px;
-        cursor: pointer;
-    }
-  }
 
 .script-form-container form{
     width: 100%;
@@ -97,7 +54,7 @@
 
 .websites-board{
     width: 90%;
-    height: 200px;
+    height: 150px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -145,12 +102,35 @@
 
 .websitesList-add-button{
     margin-top: 28px;
-    width: 6%;
+    width: 4%;
     background-color: transparent;
     border: none;
     cursor: pointer;
     transition: 0.5s;
 }
+
+.circle-container{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background: red;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
+.curved-text{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    span{
+        position:absolute;
+        left: 50%;
+        font-size: 1.2em;
+        transform-origin: 0 100px;
+    }
+}
+
+
 
 @media screen and (max-width: 1100px) {
     .script-form-container{

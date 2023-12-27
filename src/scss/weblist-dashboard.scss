@@ -6,7 +6,7 @@
     box-shadow: 1px -1px 87px -53px rgba(79,149,235,0.85);
     border-radius: $general-radius;
     grid-column: 7/ span 3;
-    grid-row: 2/ span 4;
+    grid-row: 3/ span 3;
     display: flex;
     flex-direction:column;
     justify-content: flex-start;
@@ -38,7 +38,7 @@
 }
 
 .weblist-header button{
-    width: 8%;
+    width: 10%;
     padding: 10px;
     border-radius: $general-radius;
     border: none;

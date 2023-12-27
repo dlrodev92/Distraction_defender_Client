@@ -3,7 +3,7 @@ import WeblistItem from './WebListItem';
 import plusIcon from "../assets/icons/plus.svg";
 import exitIcon from "../assets/icons/exit.svg";
 import deleteIcon from "../assets/icons/delete.svg";
-import shield from "../assets/icons/shield.svg";
+import addIcon from "../assets/icons/plus.svg";
 import { useState } from 'react';
 import Input from '../components/Input';
 import api from "../api/api";
@@ -149,13 +149,9 @@ const handleShare = (weblist) => {
             </button>
         </div>):
         (<div className='weblist-header'>
-          <h3>Create a Defender</h3>
-            <button onClick={handleToggleScriptEdit}>
-            <img src={shield} alt="plus icon" />
-            </button>
            <h3>Create Weblists</h3>
             <button onClick={toogleEdit}>
-            <img src={exitIcon} alt="plus icon" />
+            <img src={addIcon} alt="plus icon" />
             </button>
         </div>)}
     {isEdit ? 
