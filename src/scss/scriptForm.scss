@@ -12,17 +12,18 @@
     align-items: center;
     gap: 10px;
     padding: 20px;
+    form{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 5px;
+    
+    }
 }
 
-.script-form-container form{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 10px;
 
-}
 
 .select-input-container{
     width: 98%;
@@ -31,26 +32,26 @@
     justify-content: flex-start;
     align-items: flex-start;
     gap: 10px;
+    input{
+        width: 50%;
+        height: 20px;
+        border-radius: $general-radius;
+        border: none;
+        padding: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.5s;
+    }:focus{
+        outline: none;
+    }
+
+    label{
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
 }
 
-.select-input-container input{
-    width: 50%;
-    height: 30px;
-    border-radius: $general-radius;
-    border: none;
-    padding: 5px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.5s;
-}:focus{
-    outline: none;
-}
-
-.select-input-container label{
-    font-size: 1.2rem;
-    font-weight: bold;
-}
 
 .websites-board{
     width: 90%;
@@ -109,26 +110,52 @@
     transition: 0.5s;
 }
 
-.circle-container{
+.circle{
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     background: red;
     border-radius: 50%;
     justify-content: center;
     align-items: center;
+    margin-top: 12%;
+    animation: pulse 2s infinite;
+    display: grid;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 1px -1px 87px -20px rgba(19, 3, 2, 0.945);
 }
-.curved-text{
+
+.circle-container{
     width: 100%;
-    height: 100%;
-    position: absolute;
-    span{
-        position:absolute;
-        left: 50%;
-        font-size: 1.2em;
-        transform-origin: 0 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.script-submit-button{
+    width: 30%;
+    height: 30px;
+    border-radius: $general-radius;
+    border: none;
+    padding: 5px;
+    font-size: 1rem;
+    background-color: $darker-shade-1;
+    font-weight: bold;
+    color: $background-color;
+    cursor: pointer;
+    transition: 0.5s;
+    margin-left: 2%;
+    &:hover{
+        background-color:$background-color;
+        font-weight: bold;
+        color: $darker-shade-1;
+        cursor: pointer;
+        scale: 0.9;
     }
 }
+
 
 
 

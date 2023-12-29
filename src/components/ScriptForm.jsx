@@ -36,13 +36,13 @@ function ScriptForm({weblistShare}){
         setWebSiteListArray((prevWebListArray) => [...prevWebListArray, web]);
       };
 
-      const handleRemoveWeb = (weblistToRemove) => {
+    const handleRemoveWeb = (weblistToRemove) => {
         setWebSiteListArray((prevWebListArray) =>
           prevWebListArray.filter((weblist) => weblist !== weblistToRemove)
         );
       };
 
-      const handleWebListShare = () =>{
+    const handleWebListShare = () =>{
       setWebSiteListArray((prevWebListArray) => [
         ...prevWebListArray,
         ...weblistShare.flatMap((websites) => websites),// flatmap instead of map because we want to return an array of arrays
@@ -100,6 +100,7 @@ function ScriptForm({weblistShare}){
 
     return(
         <div className='script-form-container'>
+          <h2> Create Your Defender Here!</h2>
           {
             isCreateDefender?
             <form onSubmit={handleSubmitForm}>
@@ -114,16 +115,17 @@ function ScriptForm({weblistShare}){
                 <ul className='websites-board'>
                     {showWebSiteListArray()}
                 </ul>
-                <button>Create Your Defender</button>
+                <button className='script-submit-button'>Create Your Defender</button>
             </form>
             :
-            <div className="circle-container">
-              <div className="curved-text">
-                <span>a</span>
-                <span>b</span>
-                <span>c</span>
+            <div className='circle-container'>
+              <div className="circle" onClick={()=> setCreateDefender(!isCreateDefender)}>
+                  <button>
+                    LOGO
+                  </button>
               </div>
             </div>
+            
             }
         </div>
     )

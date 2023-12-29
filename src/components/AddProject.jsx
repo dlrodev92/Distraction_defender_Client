@@ -1,6 +1,7 @@
 import "../scss/addProject.scss";
 import Input from "./Input";
 const AddProject = () => {
+    
     return (
         <form className="addProject-form-container">
             <Input label="Tittle"/>

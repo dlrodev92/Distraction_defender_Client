@@ -1,16 +1,16 @@
 import '../scss/project-item.scss'
 
 
-const ProjectItem = () => {
+const ProjectItem = (props) => {
     const containerStyle = {
-        backgroundImage: `url(https://images.pexels.com/photos/189833/pexels-photo-189833.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)`,
+        backgroundImage: `url(${props.url})`,
         backgroundPosition: 'center', 
         backgroundSize: 'cover',
       };
 
     return (
         <div className="project-item-container" style={containerStyle}>
-            <h3>Project Item</h3>
+            <h3>{props.title}</h3>
         </div>
     )
 }

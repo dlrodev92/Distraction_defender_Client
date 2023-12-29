@@ -4,11 +4,14 @@ import WeblistDashboard from "../components/WeblistDashboard";
 import '../scss/dashboard.scss';
 import ScriptForm from '../components/ScriptForm';
 import api from "../api/api";
+import projectApi from "../api/projectsApi";
 import { useState, useEffect } from "react";
 import TaskManager from './../components/TaskManager';
 
 function Dashboard() {
     const [weblistShare, setWeblistShare] = useState([])
+
+    const [projects , setProjects] = useState([])
 
     const [isDashboardToogle, setIsDashboardToogle] = useState("projects");
 
@@ -31,8 +34,6 @@ function Dashboard() {
       setIsUserEdit(value);
     };
 
-
-    
     const getUserData = async () => {
       try {
           const response = await api.getUserProfile();
@@ -56,6 +57,15 @@ function Dashboard() {
       }
     }
 
+    const getUserProjects = async () => {
+      try {
+          const response = await projectApi.getProjects();
+          setProjects(response.data);
+      } catch (error) {
+          console.error("Error fetching user data:", error);
+      }
+    }
+
     //here we retrieve all the user data on mount
 
     useEffect(() =>{
@@ -71,6 +81,14 @@ function Dashboard() {
       setIsWeblistEdit(false);
 
     }, [isWeblistEdit]);
+
+
+   //here we retrieve all the user projects on mount
+
+    useEffect(() => {
+      getUserProjects();
+    }, [projects]);
+
 
     return (
       <div className="dashboard-container">
@@ -91,7 +109,9 @@ function Dashboard() {
 
         {isDashboardToogle === "projects"? 
          (
-          <TaskManager/>
+          <TaskManager
+          projects={projects}
+          />
          ):
          (<>
           <ScriptForm 

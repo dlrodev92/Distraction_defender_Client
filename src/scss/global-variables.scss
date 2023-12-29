@@ -30,3 +30,16 @@ body{
     padding: 2px;
 }
 
+//ANIMATIONS
+
+@keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.4);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }

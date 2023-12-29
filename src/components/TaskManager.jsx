@@ -9,7 +9,7 @@ import AddProject from './AddProject'
 import EditProject from './EditProject';
 
 
-function TaskManager(){
+function TaskManager({projects}){
     const [projectAdd, isProjectAdd] = useState(false);
     const [onProjecEdit, isOnProjectEdit] = useState(false);
 
@@ -19,6 +19,12 @@ function TaskManager(){
 
     const toogleProjectEdit = () =>{
         isOnProjectEdit(!onProjecEdit);
+    }
+
+    const getProjects = () =>{
+        return(
+            projects.map(project => <ProjectItem key={project.id} title={project.title} url={project.image}/>)
+        )
     }
 
 
@@ -44,9 +50,7 @@ function TaskManager(){
                 <AddProject /> 
                 :  
                 <div className='item-container'>
-                    <ProjectItem />
-                    <ProjectItem />
-                    <ProjectItem />
+                    {getProjects()}
                 </div>
                 }
                

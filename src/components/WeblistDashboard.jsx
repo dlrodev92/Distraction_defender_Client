@@ -9,7 +9,7 @@ import Input from '../components/Input';
 import api from "../api/api";
 import { v4 as uuidv4 } from 'uuid';
 
-const WeblistDashboard = ({webListData, setIsWeblistEdit, isWeblistEdit, handleSetWeblistShare, toogleScriptEdit}) =>{
+const WeblistDashboard = ({webListData, setIsWeblistEdit, isWeblistEdit, handleSetWeblistShare}) =>{
     const [isEdit, setIsEdit] = useState(false);
 
     const [weblistForm, setWeblistForm] = useState({
@@ -23,9 +23,6 @@ const WeblistDashboard = ({webListData, setIsWeblistEdit, isWeblistEdit, handleS
         setIsEdit(!isEdit);
     }
 
-    const handleToggleScriptEdit = () => {
-      toogleScriptEdit(true); 
-    };
 
     const showWeblistArray = () => {
         return webListArray.map((weblist) => (
