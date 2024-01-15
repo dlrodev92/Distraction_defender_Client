@@ -3,6 +3,9 @@ import Input from '../components/Input';
 import '../scss/signup.scss';
 import{useNavigate} from 'react-router-dom';
 import api from '../api/api';
+import logo from '../assets/images/logo.webp'
+import arrowIcon from '../assets/icons/exit.svg'
+
 
 const Signup = () => {
 
@@ -83,7 +86,13 @@ const Signup = () => {
   return (
     <div className='container'>
         <div className='signup-container'>
+          <div className='signup-container-header'>
+            <img src={logo} alt="Distraction defender logo" />
             <h1>Signup</h1>
+            <button>
+              <img src={arrowIcon} alt="Arrow icon" onClick={() =>{ Navigate('/')}}/>
+            </button>
+          </div>
             <form className='signup-form' onSubmit={handleSubmit}>
                <Input label='Name' name='name' onChange={handleChange}/>
                <Input label='Surname' name='surname' onChange={handleChange}/>

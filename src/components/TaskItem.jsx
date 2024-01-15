@@ -1,10 +1,11 @@
 import "../scss/task-item.scss";
 import {useState} from "react";
 import deleteIcon from "../assets/icons/delete.svg";
-import saveIcon from "../assets/icons/save.svg"
+import saveIcon from "../assets/icons/save.svg";
 
-const TaskItem = () =>{
-    const [isComplete, setIsComplete] = useState(false);
+
+const TaskItem = (props) =>{
+    const [isComplete, setIsComplete] = useState(props.completed);
     const [isTaskEdit, setTaskEdit] = useState(false);
 
     const toogleComplete = () =>{
@@ -31,13 +32,13 @@ const TaskItem = () =>{
                         </button>
                     </div>
                     : 
-                    <p>Task Description</p>
+                    <p>{props.description}</p>
                     }
                 </div>
                 <div className="task-item-container-labels">
-                    <h4>⏲️: 24/07/24</h4>
-                    <h4>📅: 24/08/24</h4>
-                    <h4>🖥️: Backend Task</h4>
+                    <h4>⏲️: {props.created}</h4>
+                    <h4>📅: {props.due}</h4>
+                    <h4>🖥️: {props.label}</h4>
                 </div>
             </div>
             <div className="task-item-container-complete">

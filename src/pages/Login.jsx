@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext }   from '../context/useAuthContext';
 import '../scss/login.scss';
 import { useEffect } from 'react';
+import logo from '../assets/images/logo.webp'
 
 
 const Login = () => {
@@ -86,7 +87,7 @@ useEffect(() => {
   return (
     <div className='container'>
       <div className='login-container'>
-        <h1>Login</h1>
+        <img src={logo} alt="Distraction defender logo" />
         <form className='login-form' onSubmit={handleLogin}>
           <Input className='login-input' label='Username' name='username' onChange={handleUserLogin} />
           <Input className='login-input' label='Password' type='password' name='password' onChange={handleUserLogin} />

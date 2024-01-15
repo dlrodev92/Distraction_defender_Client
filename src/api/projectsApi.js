@@ -57,38 +57,125 @@ class projectsApi {
     }
   
     async createProject(project) {
-        this._setAuthHeaders();
-        try {
-        const response = await this.axiosInstanceWithAuth.post('/api/projects/', project);
-        if (response.status === 201) {
+      this._setAuthHeaders();
+  
+      try {
+          const response = await this.axiosInstanceWithAuth.post('/api/projects/', project,{
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            }
+          });
+  
+          if (response.status === 201) {
+              return {
+                  success: true,
+                  data: response.data,
+                  fullResponse: response, 
+              };
+          } else {
+              return {
+                  success: false,
+                  error: 'An error occurred while creating project',
+                  fullResponse: response, 
+              };
+          }
+      } catch (error) {
+          if (error.response && error.response.status === 401) {
+              return {
+                  success: false,
+                  error: 'Unauthorized',
+                  fullResponse: error.response, 
+              };
+          } else {
+              return {
+                  success: false,
+                  error: 'An error occurred while creating project',
+                  fullResponse: error.response, 
+              };
+          }
+      }
+  }
+  async deleteProject(projectId) {
+    this._setAuthHeaders();
+
+    try {
+        const response = await this.axiosInstanceWithAuth.delete(`/api/projects/${projectId}/`);
+
+        if (response.status === 204) {
             return {
-            success: true,
-            data: response.data,
+                success: true,
+                data: response.data,
+                fullResponse: response, 
             };
         } else {
             return {
-            success: false,
-            error: 'An error occurred while creating project',
+                success: false,
+                error: 'An error occurred while deleting project',
+                fullResponse: response, 
             };
         }
-        } catch (error) {
+    } catch (error) {
         if (error.response && error.response.status === 401) {
             return {
-            success: false,
-            error: 'Unauthorized',
+                success: false,
+                error: 'Unauthorized',
+                fullResponse: error.response, 
             };
         } else {
             return {
-            success: false,
-            error: 'An error occurred while creating project',
+                success: false,
+                error: 'An error occurred while deleting project',
+                fullResponse: error.response, 
             };
         }
+    }
+  }
+  async updateProject(project, projectId) {
+    this._setAuthHeaders();
+
+    try {
+        const response = await this.axiosInstanceWithAuth.patch(`/api/projects/${projectId}/`, project,{
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          }
+        });
+
+        if (response.status === 201) {
+            return {
+                success: true,
+                data: response.data,
+                fullResponse: response, 
+            };
+        } else {
+            return {
+                success: false,
+                error: 'An error occurred while creating project',
+                fullResponse: response, 
+            };
         }
-    
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            return {
+                success: false,
+                error: 'Unauthorized',
+                fullResponse: error.response, 
+            };
+        } else {
+            return {
+                success: false,
+                error: 'An error occurred while creating project',
+                fullResponse: error.response, 
+            };
+        }
     }
 }
+}
 
-  
+    
+
+  //HERE THE TASKS FUNCTIONS
+
+
 const projectApi = new projectsApi();
 
 export default projectApi;

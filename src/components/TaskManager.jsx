@@ -1,4 +1,5 @@
 import '../scss/taskManager.scss'
+import projectsApi from '../api/projectsApi';
 import { useState } from 'react'
 import ExitIcon from '../assets/icons/exit.svg';
 import EditIcon from '../assets/icons/edit.svg';
@@ -9,9 +10,28 @@ import AddProject from './AddProject'
 import EditProject from './EditProject';
 
 
-function TaskManager({projects}){
+function TaskManager({projects, setProjects}){
     const [projectAdd, isProjectAdd] = useState(false);
     const [onProjecEdit, isOnProjectEdit] = useState(false);
+    const[selectedProject, setSelectedProject] = useState('');
+    
+    const handleSelectedProject = (projectId) => {
+        const project = projects.find((project) => project.id === projectId);
+        setSelectedProject(project);
+      };
+
+    const handleDeleteProject = async () =>{
+        if(selectedProject.id !== undefined){
+            const response = await projectsApi.deleteProject(selectedProject.id);
+            if(response.success){
+                const newProjects = projects.filter((project) => project.id !== selectedProject.id);
+                setProjects(newProjects);
+                setSelectedProject('');
+            }
+        }
+            
+    }
+    
 
     const toogleProjectAdd = () =>{
         isProjectAdd(!projectAdd);
@@ -23,17 +43,17 @@ function TaskManager({projects}){
 
     const getProjects = () =>{
         return(
-            projects.map(project => <ProjectItem key={project.id} title={project.title} url={project.image}/>)
+            projects.map(project => <ProjectItem key={project.id} title={project.title} url={project.image}  handleSelectedProject={() => handleSelectedProject(project.id)}/>)
         )
     }
 
 
-    const project = "projecto"
+   
 
     const containerStyle = {
-        backgroundImage: `url(https://images.pexels.com/photos/189833/pexels-photo-189833.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)`,
-        backgroundPosition: 'center', // Centra la imagen
-        backgroundSize: 'cover', //
+        backgroundImage: selectedProject ? `url(${selectedProject.image})`: `url(https://i.ibb.co/X3rdqSS/Coming-So-On-1.webp)`,
+        backgroundPosition: 'center', 
+        backgroundSize: 'cover', 
       };
 
     return(
@@ -47,7 +67,11 @@ function TaskManager({projects}){
                 </div>
 
                 {projectAdd? 
-                <AddProject /> 
+                <AddProject 
+                projects={projects}
+                setProjects={setProjects}
+                toogleProjectAdd={toogleProjectAdd}
+                /> 
                 :  
                 <div className='item-container'>
                     {getProjects()}
@@ -60,10 +84,11 @@ function TaskManager({projects}){
                 {
                 onProjecEdit ? 
 
-                <EditProject/>
+                <EditProject selectedProject={selectedProject}/>
                 :
                 <div className="project-image-container" style={containerStyle}>
-                    <h2>{`My ${project} Task`}</h2>
+                    { selectedProject? <h2>{selectedProject.title}</h2> : <h2>{`Select Your Project`}</h2>
+                        }
                 </div>
                 }
 
@@ -78,19 +103,29 @@ function TaskManager({projects}){
                    null
                     :
                     <p className='project-description-p'>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum aliquam nam reprehenderit 
-                    suscipit tempora eum accusantium iure nihil illo eaque! Dolorum repellendus magnam adipisci, 
-                    nulla unde quod consequuntur eum accusantium.
+                   {selectedProject ? selectedProject.description : ""}
                     </p>
                 }
                
-                <div className='item-container'>
-                    <TaskItem />
-                    <TaskItem />
-                    <TaskItem />
-                    <TaskItem />
-                    <TaskItem />
-                    <TaskItem />
+               <div className='item-container'>
+                    {selectedProject.tasks && selectedProject.tasks.length > 0 ? 
+                        selectedProject.tasks.map(task => 
+                        <TaskItem 
+                            key={task.id} 
+                            description={task.description} 
+                            created={new Date(task.created_at).toLocaleDateString()} 
+                            due={task.due_date} 
+                            label={task.label} 
+                            completeted={task.completeted}
+                        />
+                        ) :
+                        <h2>There are no tasks on this project yet</h2>
+                    }
+                </div>
+                <div className='footer-task-container'>
+                   <button onClick={handleDeleteProject}>
+                    Delete Project
+                   </button>
                 </div>
                
             </div>

@@ -87,7 +87,7 @@ function Dashboard() {
 
     useEffect(() => {
       getUserProjects();
-    }, [projects]);
+    }, []);
 
 
     return (
@@ -111,6 +111,7 @@ function Dashboard() {
          (
           <TaskManager
           projects={projects}
+          setProjects={setProjects}
           />
          ):
          (<>
