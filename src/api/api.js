@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 class Api {
   
   constructor() {
-    this.API_BASE_URL = 'http://127.0.0.1:8000/';
+    this.API_BASE_URL = 'https://distraction-defender-server.onrender.com/';
 
     this.axiosInstance = axios.create({
       baseURL: this.API_BASE_URL,
@@ -65,7 +65,6 @@ class Api {
   }
 
   async signup(userData) {
-    console.log('Request Payload:', userData);
     try {
       const response = await this.axiosInstance.post('/api/users/', userData, {
         headers: {
