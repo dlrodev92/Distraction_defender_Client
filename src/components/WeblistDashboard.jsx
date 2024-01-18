@@ -175,7 +175,7 @@ const handleShare = (weblist) => {
 
      (<>
         <div className='weblist-container'>
-        {webListData?  getUserWebList() : <h1>There is no weblist</h1>}
+        {webListData?  getUserWebList() : <h2>There is no weblist</h2>}
         </div>
     </>
     )}

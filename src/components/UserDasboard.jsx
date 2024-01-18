@@ -98,8 +98,9 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
         <>
             <form className="user-edit-container">
                 <Input label='Username' name='username' onChange={handleUserFormChange}/>
-                <Input label='Current Password' type='email' name='current_password' onChange={handleUserFormChange}/>
+                <Input label='Password' type='email' name='current_password' onChange={handleUserFormChange}/>
                 <Input label='New Password' type='password' name='new_password' onChange={handleUserFormChange}/>
+                <label>Image </label>
                 <input className='picture-input' type="file" name="image" accept='.jpg, .png, .jpeg' onChange={handleUserImage}/>
             </form>
             <div className='buttons-container'>

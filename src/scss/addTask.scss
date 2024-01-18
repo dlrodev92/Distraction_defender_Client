@@ -1,0 +1,34 @@
+@import './global-variables.scss';
+
+.add-task-form{
+    border-top: 3px solid $darker-shade-1;
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    button{
+        width: 30%;
+        height: 30px;
+        border-radius: $general-radius;
+        border: none;
+        padding: 5px;
+        font-size: 1rem;
+        margin-top: 20px;
+        background-color: $darker-shade-1;
+        font-weight: bold;
+        color: $background-color;
+        cursor: pointer;
+        transition: all 0.5s ease-in-out;
+        margin-left: 2%;
+        &:hover{
+            background-color:$background-color;
+            font-weight: bold;
+            color: $darker-shade-1;
+            cursor: pointer;
+            scale: 0.9;
+    }
+    }
+}

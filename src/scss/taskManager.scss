@@ -195,7 +195,7 @@
         width: 30%;
         height: 35px;
         border: none;
-        background-color: $darker-shade-1;
+        background-color: #EC3A3A;
         transition: all 0.5s ease-in-out;
         border-radius: $general-radius;
         color: $background-color;
@@ -203,8 +203,7 @@
         font-weight: bold;
         cursor: pointer;
         &:hover{
-            transform: scale(0.9);
-            background-color: $lighter-tint-1;
+            transform: scale(1.1);
         }
     }
 }

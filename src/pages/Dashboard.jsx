@@ -112,6 +112,7 @@ function Dashboard() {
           <TaskManager
           projects={projects}
           setProjects={setProjects}
+          getUserProjects={getUserProjects}
           />
          ):
          (<>
@@ -121,6 +122,7 @@ function Dashboard() {
           <WeblistDashboard 
               webListData={userWeblist}  
               isWeblistEdit={isWeblistEdit} 
+              setIsWeblistEdit={setIsWeblistEdit}
               handleSetWeblistShare={handleSetWeblistShare} 
           />
        </>)

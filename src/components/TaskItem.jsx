@@ -1,56 +1,62 @@
 import "../scss/task-item.scss";
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import deleteIcon from "../assets/icons/delete.svg";
-import saveIcon from "../assets/icons/save.svg";
+import projectsApi from '../api/projectsApi';
 
-
-const TaskItem = (props) =>{
-    const [isComplete, setIsComplete] = useState(props.completed);
+const TaskItem = ({ selectedProject, id, completed, description, due, label, created, setSelectedProject }) => {
+    const [isComplete, setIsComplete] = useState(completed);
     const [isTaskEdit, setTaskEdit] = useState(false);
 
-    const toogleComplete = () =>{
-        setIsComplete(!isComplete);
+    useEffect(() => {
+        setIsComplete(completed);
+    }, [completed]);
+
+    const toogleComplete = async () => {
+        const response = await projectsApi.completeTask(selectedProject.id, id, { completed: !isComplete })
+        if (response.success) {
+            setIsComplete(!isComplete);
+        }
     }
 
-    const toogleTaskEdit = () =>{
+    
+
+    const toogleTaskEdit = () => {
         setTaskEdit(true);
     }
 
     const completedStyles = {
-        backgroundColor: isComplete? "green" : "rgb(236, 58, 58)",
+        backgroundColor: isComplete ? "green" : "rgb(236, 58, 58)",
     }
 
-    return(
+    const handleDeleteTask = async () => {
+        const response = await projectsApi.deleteTask(selectedProject.id, id);
+        if (response.success) {
+            const newTasks = selectedProject.tasks.filter((task) => task.id !== id);
+            setSelectedProject({ ...selectedProject, tasks: newTasks });
+        }
+    }
+
+    return (
         <div className="task-item-container">
             <div className="task-item-container-info" onClick={toogleTaskEdit}>
                 <div className="task-item-container-header">
-                    {isTaskEdit? 
-                    <div className="task-item-container-edit">
-                        <input type="text" />
-                        <button>
-                            <img src={saveIcon} alt="delete Icon"/>
-                        </button>
-                    </div>
-                    : 
-                    <p>{props.description}</p>
-                    }
+                    <p>{description}</p>
                 </div>
                 <div className="task-item-container-labels">
-                    <h4>⏲️: {props.created}</h4>
-                    <h4>📅: {props.due}</h4>
-                    <h4>🖥️: {props.label}</h4>
+                    <h4>⏲️: {created}</h4>
+                    <h4>📅: {due}</h4>
+                    <h4>🖥️: {label}</h4>
                 </div>
             </div>
             <div className="task-item-container-complete">
 
                 <div className="completed-circle" style={completedStyles} onClick={toogleComplete}>
-
                 </div>
 
-                <button>
-                    <img src={deleteIcon} alt="delete Icon"/>
+                <button onClick={handleDeleteTask}>
+                    <img src={deleteIcon} alt="delete Icon" />
                 </button>
-                
+
             </div>
         </div>
     )

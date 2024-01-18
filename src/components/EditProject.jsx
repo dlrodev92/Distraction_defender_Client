@@ -3,7 +3,7 @@ import Input from "./Input";
 import { useState } from 'react';
 import projectApi from "../api/projectsApi";
 
-const EditProject = ({selectedProject}) => {
+const EditProject = ({selectedProject, isOnProjectEdit, onProjecEdit, getUserProjects, setSelectedProject}) => {
     const [projectData, setProjectData] = useState({
         title: "",
         description: "",
@@ -23,49 +23,73 @@ const EditProject = ({selectedProject}) => {
         setProjectImage(file);
     }
 
-    const handleSubmit = async (event) => {
+    //function to edit the project
+
+    const handleEditProject = async (event) => {
         event.preventDefault();
     
-        // Check if at least one field is filled or an image is selected
+        let updatedData = {};
+    
         if (!projectData.title && !projectData.description && !projectImage) {
-            alert("Please fill in at least one field or select an image.");
+            alert("Please fill in at least one of the fields");
             return;
         }
     
-        // Prepare project data
-        const newProject = {
-            title: projectData.title,
-            description: projectData.description,
-            image: projectImage,
-        };
+        if (projectData.title) {
+            updatedData = {
+                ...updatedData,
+                title: projectData.title,
+            };
+        }
+    
+        if (projectData.description) {
+            updatedData = {
+                ...updatedData,
+                description: projectData.description,
+            };
+        }
+    
+        if (projectImage) {
+            updatedData = {
+                ...updatedData,
+                image: projectImage,
+            };
+        }
     
         try {
-            // Call the API to update the project
-            const response = await projectApi.updateProject(newProject, selectedProject.id);
+            
+            const response = await projectApi.updateProject(updatedData, selectedProject.id);
     
-            // Check the response status
+            // Check the response
             if (response.success) {
-                // Reset form after successful submission
                 setProjectData({
-                    title: "",
-                    description: "",
+                    title: '',
+                    description: '',
                 });
                 setProjectImage(null);
-            } else if (response.success == false) {
-                // Display an alert and log the error details
-                alert('There was an error. Please try again.');
+                
+                isOnProjectEdit(!onProjecEdit)
+                
+                getUserProjects();
+
+                setSelectedProject('')
+
+                alert("Project updated successfully");
+
+                
+            } else {
                 console.error(response);
             }
         } catch (error) {
-            // Handle unexpected errors (e.g., network issues)
             console.error('An unexpected error occurred:', error);
             alert('An unexpected error occurred. Please try again later.');
         }
     };
 
     return (
-        <form className="addProject-form-container" onSubmit={handleSubmit}>
-            <h2>Edit</h2>
+        <form className="addProject-form-container" onSubmit={handleEditProject}>
+            <h2> Edit </h2>
+            <span>{selectedProject.title}</span>
             <Input label="Title" name="title" value={projectData.title} onChange={handleChange} />
             <Input label="Description" name="description" value={projectData.description} onChange={handleChange} />
             <Input type="file" label="Image" accept="image/png, image/jpeg, image/webp" onChange={handleImageChange} />

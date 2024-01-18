@@ -130,6 +130,7 @@ class projectsApi {
         }
     }
   }
+
   async updateProject(project, projectId) {
     this._setAuthHeaders();
 
@@ -140,7 +141,7 @@ class projectsApi {
           }
         });
 
-        if (response.status === 201) {
+        if (response.status === 200) {
             return {
                 success: true,
                 data: response.data,
@@ -169,11 +170,121 @@ class projectsApi {
         }
     }
 }
+//HERE THE TASKS FUNCTIONS
+
+async createTask(task, projectId) {
+    this._setAuthHeaders();
+
+    try {
+        const response = await this.axiosInstanceWithAuth.post(`/api/projects/${projectId}/tasks/`, task);
+
+        if (response.status === 201) {
+            return {
+                success: true,
+                data: response.data,
+                fullResponse: response, 
+            };
+        } else {
+            return {
+                success: false,
+                error: 'An error occurred while creating a task.',
+                fullResponse: response, 
+            };
+        }
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            return {
+                success: false,
+                error: 'Unauthorized',
+                fullResponse: error.response, 
+            };
+        } else {
+            return {
+                success: false,
+                error: 'An error occurred while creating project',
+                fullResponse: error.response, 
+            };
+        }
+    }
+}
+
+async completeTask(projectId, taskId, data) {
+    this._setAuthHeaders();
+
+    try {
+        const response = await this.axiosInstanceWithAuth.patch(`/api/projects/${projectId}/tasks/${taskId}/`, data);
+
+        if (response.status === 200) {
+            return {
+                success: true,
+                data: response.data,
+                fullResponse: response, 
+            };
+        } else {
+            return {
+                success: false,
+                error: 'An error occurred while editing a task.',
+                fullResponse: response, 
+            };
+        }
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            return {
+                success: false,
+                error: 'Unauthorized',
+                fullResponse: error.response, 
+            };
+        } else {
+            return {
+                success: false,
+                error: 'An error occurred while editing project',
+                fullResponse: error.response, 
+            };
+        }
+    }
+}
+
+async deleteTask(projectId, taskId) {
+        this._setAuthHeaders();
+
+        try {
+            const response = await this.axiosInstanceWithAuth.delete(`/api/projects/${projectId}/tasks/${taskId}/`);
+
+            if (response.status === 204) {
+                return {
+                    success: true,
+                    data: response.data,
+                    fullResponse: response, 
+                };
+            } else {
+                return {
+                    success: false,
+                    error: 'An error occurred while deleting the task',
+                    fullResponse: response, 
+                };
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                return {
+                    success: false,
+                    error: 'Unauthorized',
+                    fullResponse: error.response, 
+                };
+            } else {
+                return {
+                    success: false,
+                    error: 'An error occurred while deleting the task',
+                    fullResponse: error.response, 
+                };
+            }
+        }
+    }
+
 }
 
     
 
-  //HERE THE TASKS FUNCTIONS
+  
 
 
 const projectApi = new projectsApi();

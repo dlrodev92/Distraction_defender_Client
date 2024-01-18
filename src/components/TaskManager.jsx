@@ -1,6 +1,6 @@
 import '../scss/taskManager.scss'
 import projectsApi from '../api/projectsApi';
-import { useState } from 'react'
+import { useState} from 'react'
 import ExitIcon from '../assets/icons/exit.svg';
 import EditIcon from '../assets/icons/edit.svg';
 import ProjectItem from './ProjectItem';
@@ -8,37 +8,38 @@ import TaskItem from './TaskItem';
 import PlusIcon from '../assets/icons/plus.svg'
 import AddProject from './AddProject'
 import EditProject from './EditProject';
+import AddTask from './AddTask';
+import UniversalModal from './UniversalModal';
 
 
-function TaskManager({projects, setProjects}){
+function TaskManager({projects, setProjects, getUserProjects, }){
     const [projectAdd, isProjectAdd] = useState(false);
-    const [onProjecEdit, isOnProjectEdit] = useState(false);
+    const [onProjecEdit, isOnProjectEdit] = useState('');
     const[selectedProject, setSelectedProject] = useState('');
-    
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
     const handleSelectedProject = (projectId) => {
         const project = projects.find((project) => project.id === projectId);
         setSelectedProject(project);
       };
 
-    const handleDeleteProject = async () =>{
-        if(selectedProject.id !== undefined){
-            const response = await projectsApi.deleteProject(selectedProject.id);
-            if(response.success){
-                const newProjects = projects.filter((project) => project.id !== selectedProject.id);
-                setProjects(newProjects);
-                setSelectedProject('');
-            }
-        }
-            
-    }
-    
+    // const handleDeleteProject = async () =>{
+    //     if(selectedProject.id !== undefined){
+    //         const response = await projectsApi.deleteProject(selectedProject.id);
+    //         if(response.success){
+    //             const newProjects = projects.filter((project) => project.id !== selectedProject.id);
+    //             setProjects(newProjects);
+    //             setSelectedProject('');
+    //         }
+    //     }   
+    // }
 
     const toogleProjectAdd = () =>{
         isProjectAdd(!projectAdd);
     }
 
     const toogleProjectEdit = () =>{
-        isOnProjectEdit(!onProjecEdit);
+        selectedProject ? isOnProjectEdit(!onProjecEdit) : alert('Please select a project first');
     }
 
     const getProjects = () =>{
@@ -47,8 +48,49 @@ function TaskManager({projects, setProjects}){
         )
     }
 
+    const handleDeleteProject = async () => {
+        if (selectedProject.id !== undefined) {
+          
+          setShowDeleteConfirmation(true);
+          
+        }
+      };
+    
+      const handleConfirmDelete = async () => {
+       
+        const response = await projectsApi.deleteProject(selectedProject.id);
+        if (response.success) {
+          const newProjects = projects.filter((project) => project.id !== selectedProject.id);
+          setProjects(newProjects);
+          setSelectedProject('');
+        }
+        
+        setShowDeleteConfirmation(false);
+      };
+    
+      const handleCancelDelete = () => {
 
-   
+        setShowDeleteConfirmation(false);
+
+      };
+
+    const getProjectTasks = () =>{
+        console.log(selectedProject.tasks)
+       return selectedProject.tasks.map(task => 
+            <TaskItem 
+                key={task.id} 
+                description={task.description} 
+                created={new Date(task.created_at).toLocaleDateString()} 
+                due={task.due_date} 
+                label={task.label} 
+                completed={task.completed}
+                selectedProject={selectedProject}
+                id={task.id}
+                setSelectedProject={setSelectedProject}
+            />);
+    }
+
+
 
     const containerStyle = {
         backgroundImage: selectedProject ? `url(${selectedProject.image})`: `url(https://i.ibb.co/X3rdqSS/Coming-So-On-1.webp)`,
@@ -84,7 +126,14 @@ function TaskManager({projects, setProjects}){
                 {
                 onProjecEdit ? 
 
-                <EditProject selectedProject={selectedProject}/>
+                <EditProject 
+                selectedProject={selectedProject} 
+                isOnProjectEdit={isOnProjectEdit} 
+                onProjecEdit={onProjecEdit} 
+                getUserProjects={getUserProjects} 
+                setSelectedProject={setSelectedProject}
+                />
+
                 :
                 <div className="project-image-container" style={containerStyle}>
                     { selectedProject? <h2>{selectedProject.title}</h2> : <h2>{`Select Your Project`}</h2>
@@ -109,25 +158,28 @@ function TaskManager({projects, setProjects}){
                
                <div className='item-container'>
                     {selectedProject.tasks && selectedProject.tasks.length > 0 ? 
-                        selectedProject.tasks.map(task => 
-                        <TaskItem 
-                            key={task.id} 
-                            description={task.description} 
-                            created={new Date(task.created_at).toLocaleDateString()} 
-                            due={task.due_date} 
-                            label={task.label} 
-                            completeted={task.completeted}
-                        />
-                        ) :
+                        getProjectTasks()
+                        :
                         <h2>There are no tasks on this project yet</h2>
                     }
+                    <AddTask 
+                        selectedProject={selectedProject} 
+                        selectedProjectTasks={selectedProject.tasks} 
+                        setSelectedProject={setSelectedProject}
+                    />
                 </div>
                 <div className='footer-task-container'>
-                   <button onClick={handleDeleteProject}>
-                    Delete Project
-                   </button>
+                    <button onClick={handleDeleteProject}>Delete Project</button>
+
+                    {/* Modal de confirmación */}
+                    {showDeleteConfirmation && (
+                    <UniversalModal>
+                        <p>do you really want to delete this Project?</p>
+                        <button onClick={handleConfirmDelete}>Sí</button>
+                        <button onClick={handleCancelDelete}>No</button>
+                    </UniversalModal>
+                    )}
                 </div>
-               
             </div>
         </div>
     )

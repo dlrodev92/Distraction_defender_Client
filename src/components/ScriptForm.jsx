@@ -4,9 +4,11 @@ import Input from './Input';
 import {useState} from 'react';
 import deleteIcon from "../assets/icons/delete.svg";
 import plusIcon from "../assets/icons/plus.svg";
+import exitIcon from "../assets/icons/exit.svg";
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 import api from "../api/api";
+import logo from "../assets/images/logo.webp"
 
 function ScriptForm({weblistShare}){
     const [web, setWeb] = useState("")
@@ -68,28 +70,30 @@ function ScriptForm({weblistShare}){
           alert("You need to add at least one website to your defender");
         } else if (defenderForm.from_hour === "" || defenderForm.to_hour === "") {
           alert("You need to add a time range to your defender");
-        }
-      
-        try {
-          const response = await api.createDefender(defenderForm);
-      
-          if (response.success) {
-            // Descargar el script modificado después de una respuesta exitosa
-            const a = document.createElement('a');
-            a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(response.data)}`;
-            a.download = 'modified_blocker_script.py';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(a.href);
-          } else {
-            console.error("Error creating defender:", response.error);
+        }else{
+          try {
+            const response = await api.createDefender(defenderForm);
+        
+            if (response.success) {
+              // Descargar el script modificado después de una respuesta exitosa
+              const a = document.createElement('a');
+              a.href = `data:text/plain;charset=utf-8,${encodeURIComponent(response.data)}`;
+              a.download = 'modified_blocker_script.py';
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              window.URL.revokeObjectURL(a.href);
+            } else {
+              console.error("Error creating defender:", response.error);
+              // Manejar el error de alguna manera, mostrar un mensaje, etc.
+            }
+          } catch (error) {
+            console.error("Error creating defender:", error);
             // Manejar el error de alguna manera, mostrar un mensaje, etc.
           }
-        } catch (error) {
-          console.error("Error creating defender:", error);
-          // Manejar el error de alguna manera, mostrar un mensaje, etc.
         }
+      
+        
       };
     
     useEffect(() => {
@@ -103,6 +107,16 @@ function ScriptForm({weblistShare}){
           <h2> Create Your Defender Here!</h2>
           {
             isCreateDefender?
+            <button className='script-exit-button' onClick={()=> setCreateDefender(!isCreateDefender)}>
+              <img src={exitIcon} alt="exitIcon" />
+            </button>
+            :
+            null
+          }
+
+          {
+            isCreateDefender?
+            
             <form onSubmit={handleSubmitForm}>
                 <HourSelect label="From" name="from_hour" onChange={handleDefenderForm}/>
                 <HourSelect label="To" name="to_hour" onChange={handleDefenderForm}/>
@@ -115,14 +129,12 @@ function ScriptForm({weblistShare}){
                 <ul className='websites-board'>
                     {showWebSiteListArray()}
                 </ul>
-                <button className='script-submit-button'>Create Your Defender</button>
+                <button className='script-submit-button'>Create Defender</button>
             </form>
             :
             <div className='circle-container'>
               <div className="circle" onClick={()=> setCreateDefender(!isCreateDefender)}>
-                  <button>
-                    LOGO
-                  </button>
+                  <img src={logo} alt="distraction defender logo" />
               </div>
             </div>
             

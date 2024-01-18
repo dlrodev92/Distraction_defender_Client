@@ -1,5 +1,11 @@
 import '../scss/pomodoro-dashboard.scss';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import startSound from '../assets/sound/start.mp3';
+import endSound1 from '../assets/sound/endSound1.mp3';
+import endSound2 from '../assets/sound/endSound2.mp3';
+import endSound3 from '../assets/sound/endSound3.mp3';
+import endSound4 from '../assets/sound/endSound4.mp3';
+import endSound5 from '../assets/sound/endSound5.mp3';
 
 const PomodoroDashboard = () => {
   const [selectedElement, setSelectedElement] = useState('pomodoro');
@@ -8,9 +14,28 @@ const PomodoroDashboard = () => {
   const [isRunning, setIsRunning] = useState(false);
 
   const id = useRef();
+  const endSounds = [endSound1, endSound2, endSound3, endSound4, endSound5];
+
+  const startAudio = new Audio(startSound);
+  const endAudio = new Audio();
+
+  useEffect(() => {
+    startAudio.load();
+    endAudio.load();
+  }, []);
 
   const handleIsRunning = () => {
     setIsRunning(!isRunning);
+  };
+
+  const playStartSound = () => {
+    startAudio.play();
+  };
+
+  const playRandomEndSound = () => {
+    const randomIndex = Math.floor(Math.random() * endSounds.length);
+    endAudio.src = endSounds[randomIndex];
+    endAudio.play();
   };
 
   const handleRemainingTimeChange = () => {
@@ -19,17 +44,17 @@ const PomodoroDashboard = () => {
         if (prevSeconds === 0) {
           setMinutes((prevMinutes) => {
             if (prevMinutes === 0) {
-              
               alert('Time is up!');
               clearInterval(id.current);
               handleIsRunning();
               handleReset();
-              return prevMinutes; // No change in minutes if time is up
+              playRandomEndSound();
+              return prevMinutes;
             } else {
-              return prevMinutes - 1; // Decrease minutes by 1 if there is time left
+              return prevMinutes - 1;
             }
           });
-          return 59; // Set seconds to 59 when minutes decrement
+          return 59;
         } else {
           return prevSeconds - 1;
         }
@@ -38,6 +63,9 @@ const PomodoroDashboard = () => {
   };
 
   const handleStartPause = () => {
+    if (!isRunning) {
+      playStartSound();
+    }
     if (isRunning) {
       clearInterval(id.current);
     } else {
@@ -48,11 +76,10 @@ const PomodoroDashboard = () => {
 
   const handleReset = () => {
     clearInterval(id.current);
-    selectedElement === 'pomodoro'? setMinutes(25) : selectedElement === 'short'? setMinutes(15) : setMinutes(5);
+    selectedElement === 'pomodoro' ? setMinutes(25) : selectedElement === 'short' ? setMinutes(15) : setMinutes(5);
     setSeconds(0);
     handleIsRunning();
   };
-
 
   return (
     <div className='pomodoro-dashboard-container'>
@@ -70,7 +97,7 @@ const PomodoroDashboard = () => {
             setSelectedElement('short');
             setMinutes(15);
           }}>
-            Short Break
+            Long Break
           </button>
         </li>
         <li>
@@ -78,7 +105,7 @@ const PomodoroDashboard = () => {
             setSelectedElement('long');
             setMinutes(5);
           }}>
-            Long Break
+            Short Break
           </button>
         </li>
       </ul>

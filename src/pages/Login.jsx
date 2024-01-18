@@ -7,6 +7,7 @@ import { useAuthContext }   from '../context/useAuthContext';
 import '../scss/login.scss';
 import { useEffect } from 'react';
 import logo from '../assets/images/logo.webp'
+import UniversalModal from '../components/UniversalModal';
 
 
 const Login = () => {
@@ -26,6 +27,7 @@ const Login = () => {
     });
   };
 
+  const [showModal, setShowModal] = useState(false);
 
 const handleLogin = async (e) => {
   e.preventDefault();
@@ -86,6 +88,7 @@ useEffect(() => {
 
   return (
     <div className='container'>
+      
       <div className='login-container'>
         <img src={logo} alt="Distraction defender logo" />
         <form className='login-form' onSubmit={handleLogin}>
@@ -97,6 +100,19 @@ useEffect(() => {
           Signup Here
         </a>
       </div>
+      {/*Here the modal info logic */}
+      <button className='login-modal-info' onClick={()=>{setShowModal(true)}} >
+        Important Info
+      </button>
+      {showModal && (
+        <UniversalModal>
+          <div className='login-modal-container'>
+            <h2>Thanks for using this app.</h2>
+            <p><strong>Very important:</strong> This is an app in development and is intended to use ONLY on your computer/laptop not in your phopne also it was made to showcase my skills in Django primarily. All data is secure, but you can use fake data like myemail@myemail.com for login and use it.</p>
+            <button onClick={()=>{setShowModal(false)}}>Understood</button>
+          </div>
+        </UniversalModal>
+      )}
     </div>
   );
 };

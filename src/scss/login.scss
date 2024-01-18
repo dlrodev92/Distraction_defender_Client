@@ -78,3 +78,51 @@
     text-decoration: underline;
     color: $background-color;
 }
+
+.login-modal-info{
+    width: 100px;
+    height: 60px;
+    position:relative;
+    bottom:400px;
+    right: 310px;
+    border-radius: $general-radius;
+    border: 4px solid $darker-shade-1;
+    padding: 5px;
+    font-size: 1rem;
+    margin-top: 20px;
+    background-color: rgb(206, 206, 68);
+    font-weight: bold;
+    color: $darker-shade-1;
+    cursor: pointer;
+    transition: 0.7s;
+    &:hover{
+        background-color:$darker-shade-1;
+        font-weight: bold;
+        color: rgb(206, 206, 68);
+        border: 4px solid rgb(206, 206, 68);
+        scale: 1.1;
+    }
+}
+
+.login-modal-container{
+    button{
+        width: 20%;
+        height: 30px;
+        border-radius: $general-radius;
+        border: none;
+        font-size: 1rem;
+        margin-top: 20px;
+        background-color: $darker-shade-1;
+        font-weight: bold;
+        color: $background-color;
+        cursor: pointer;
+        transition: 0.5s;
+    }
+    button:hover{
+        background-color:$lighter-tint-3;
+        font-weight: bold;
+        color: $darker-shade-1;
+        cursor: pointer;
+        scale: 0.9;
+    }
+}

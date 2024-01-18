@@ -77,6 +77,10 @@
     align-items: flex-start;
     justify-content: center;
     gap: 10px;
+    h2{
+        align-self: center;
+        font-size: 1.9rem;
+    }
 }
 
 .weblist-submit-button{
