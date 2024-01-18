@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 class Api {
   
   constructor() {
-    this.API_BASE_URL = 'https://distraction-defender-server.onrender.com/';
+    this.API_BASE_URL = 'https://distraction-defender-server.onrender.com';
 
     this.axiosInstance = axios.create({
       baseURL: this.API_BASE_URL,
