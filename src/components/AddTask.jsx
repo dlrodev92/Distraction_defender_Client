@@ -33,6 +33,7 @@ const AddTask = ({selectedProject, selectedProjectTasks, setSelectedProject, get
                     setSelectedProject({ ...selectedProject, tasks: newTasks });
                     // call the projectsApi.updateTask to update the project in the database
                     const updateTask = await getProjects();
+                    console.log(updateTask);
                 }
             } catch (error) {
                 console.log(error);
