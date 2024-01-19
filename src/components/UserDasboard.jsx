@@ -14,6 +14,8 @@ import { useState } from 'react';
 
 const UserDashboard = ({userData, toogleUserEdit}) =>{
 
+  console.log(userData)
+
   const Navigate = useNavigate();
   const { dispatch } = useAuthContext();
 

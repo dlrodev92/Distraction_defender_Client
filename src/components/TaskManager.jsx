@@ -42,10 +42,16 @@ function TaskManager({projects, setProjects, getUserProjects, }){
         selectedProject ? isOnProjectEdit(!onProjecEdit) : alert('Please select a project first');
     }
 
-    const getProjects = () =>{
-        return(
-            projects.map(project => <ProjectItem key={project.id} title={project.title} url={project.image}  handleSelectedProject={() => handleSelectedProject(project.id)}/>)
-        )
+    const getProjects = () => {
+        // Check if projects is defined and not empty
+        if (projects && projects.length > 0) {
+            return projects.map(project => (
+                <ProjectItem key={project.id} title={project.title} url={project.image} handleSelectedProject={() => handleSelectedProject(project.id)} />
+            ));
+        } else {
+            // Return a default message or component when there are no projects
+            return <p>No projects available.</p>;
+        }
     }
 
     const handleDeleteProject = async () => {
@@ -75,19 +81,23 @@ function TaskManager({projects, setProjects, getUserProjects, }){
       };
 
     const getProjectTasks = () =>{
-        console.log(selectedProject.tasks)
-       return selectedProject.tasks.map(task => 
-            <TaskItem 
-                key={task.id} 
-                description={task.description} 
-                created={new Date(task.created_at).toLocaleDateString()} 
-                due={task.due_date} 
-                label={task.label} 
-                completed={task.completed}
-                selectedProject={selectedProject}
-                id={task.id}
-                setSelectedProject={setSelectedProject}
-            />);
+        if (selectedProject && selectedProject.tasks && selectedProject.tasks.length > 0) {
+            return selectedProject.tasks.map(task => (
+                <TaskItem
+                    key={task.id}
+                    description={task.description}
+                    created={new Date(task.created_at).toLocaleDateString()}
+                    due={task.due_date}
+                    label={task.label}
+                    completed={task.completed}
+                    selectedProject={selectedProject}
+                    id={task.id}
+                    setSelectedProject={setSelectedProject}
+                />
+            ));
+        } else {
+            return <h2>There are no tasks on this project yet</h2>;
+        }
     }
 
 

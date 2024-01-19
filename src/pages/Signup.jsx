@@ -36,7 +36,8 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+    
+   
     if (formData.password !== formData.passwordConfirm || formData.password === '' || formData.passwordConfirm === '') {
       alert('Passwords do not match, please try again');
       return;
@@ -52,9 +53,14 @@ const Signup = () => {
       password: formData.password,
       image: profilePicture instanceof File ? profilePicture : null,
     };
+
+    console.log('userData:', dataConfirmed);
+    console.log('profilePicture:', profilePicture);
+
   
     try {
       const response = await api.signup(dataConfirmed);
+      console.log('Server Response:', response);
   
       if (response.success) {
         alert('Account created successfully. You can now log in.');
