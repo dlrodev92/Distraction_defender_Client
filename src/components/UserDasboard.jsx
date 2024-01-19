@@ -122,7 +122,7 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
         <>
             <div className="userImage-container">
               <div className='img-wrapper'>
-                <img src={userData.ProfilePicture} alt="userImage"/>
+                <img src={`https://distraction-defender-server.onrender.com${userData.ProfilePicture.replace('http://127.0.0.1:8000//', '/')}`} alt="userImage"/>
               </div>
                 <h2>{userData.Username}</h2>
             </div>
