@@ -4,7 +4,7 @@ import "../scss/addTask.scss";
 import projectsApi from '../api/projectsApi';
 
 
-const AddTask = ({selectedProject, selectedProjectTasks, setSelectedProject}) =>{
+const AddTask = ({selectedProject, selectedProjectTasks, setSelectedProject, getProjects}) =>{
     const [task, setTask ] = useState({
         description: "",
         due_date: "",
@@ -25,13 +25,14 @@ const AddTask = ({selectedProject, selectedProjectTasks, setSelectedProject}) =>
         }else{
             try {
                 const response = await projectsApi.createTask(task, selectedProject.id);
-                console.log(response);
+    
                 if (response.success) {
-                    // Crear un nuevo array de tareas y agregar la nueva tarea
+                    // create a new task array and add the new task to it
                     const newTasks = [...selectedProjectTasks, response.data];
-                    // Actualizar el estado con el nuevo array de tareas
+                    // update the selected project with the new task array
                     setSelectedProject({ ...selectedProject, tasks: newTasks });
-                    console.log(newTasks);
+                    // call the projectsApi.updateTask to update the project in the database
+                    const updateTask = await getProjects();
                 }
             } catch (error) {
                 console.log(error);

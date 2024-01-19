@@ -93,6 +93,7 @@ function TaskManager({projects, setProjects, getUserProjects, }){
                     selectedProject={selectedProject}
                     id={task.id}
                     setSelectedProject={setSelectedProject}
+                    getProjects={getProjects}
                 />
             ));
         } else {
