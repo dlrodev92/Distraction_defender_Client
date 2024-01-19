@@ -20,31 +20,25 @@ const AddTask = ({selectedProject, selectedProjectTasks, setSelectedProject}) =>
 
     const handleAddTask = async (e) => {
         e.preventDefault();
-        if (!task.description || !task.due_date || !task.label) {
+        if(!task.description || !task.due_date || !task.label){
             alert("Please fill in all the fields");
-        } else {
+        }else{
             try {
                 const response = await projectsApi.createTask(task, selectedProject.id);
+                console.log(response);
                 if (response.success) {
-                    // Create a new array of tasks and add the new task
+                    // Crear un nuevo array de tareas y agregar la nueva tarea
                     const newTasks = [...selectedProjectTasks, response.data];
-                    // Update the state with the new array of tasks and reset the task state to blank
-                    setSelectedProject((prevProject) => ({
-                        ...prevProject,
-                        tasks: newTasks,
-                    }));
-                    setTask({
-                        description: "",
-                        due_date: "",
-                        label: "",
-                    });
+                    // Actualizar el estado con el nuevo array de tareas
+                    setSelectedProject({ ...selectedProject, tasks: newTasks });
+                    console.log(newTasks);
                 }
             } catch (error) {
                 console.log(error);
             }
-        }
+         }
     };
-    
+
     return(
         <form className="add-task-form">
             <Input label="Description" name="description" onChange={handleTaskChange} />
