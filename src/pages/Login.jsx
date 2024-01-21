@@ -11,6 +11,21 @@ import UniversalModal from '../components/UniversalModal';
 
 
 const Login = () => {
+  //Check the width of the login to let the app run or not
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  //Here we start the logic of the app
   const Navigate = useNavigate();
   
   const { dispatch } = useAuthContext();
@@ -113,6 +128,16 @@ useEffect(() => {
           </div>
         </UniversalModal>
       )}
+      {
+        screenWidth < 700 && (
+          <UniversalModal>
+          <div className='login-modal-container'>
+            <h2>Thanks for using this app.</h2>
+            <p><strong>Very important:</strong> This is an app in development and is intended to use ONLY on your computer/laptop not in your phopne so if you want to use it you can get back on your computer.</p>
+          </div>
+        </UniversalModal>
+        )
+      }
     </div>
   );
 };

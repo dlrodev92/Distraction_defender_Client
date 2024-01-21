@@ -18,7 +18,6 @@ const TaskItem = ({ selectedProject, id, completed, description, due, label, cre
         }
     }
 
-    
 
     const toogleTaskEdit = () => {
         setTaskEdit(true);
