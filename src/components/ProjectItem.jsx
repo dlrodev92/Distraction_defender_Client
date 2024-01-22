@@ -1,5 +1,5 @@
 import '../scss/project-item.scss'
-
+import {motion} from 'framer-motion'
 
 
 const ProjectItem = (props) => {
@@ -14,9 +14,16 @@ const ProjectItem = (props) => {
       };
 
     return (
-        <div className="project-item-container" style={containerStyle} onClick={getProjectId}>
+        <motion.div className="project-item-container" 
+        style={containerStyle} 
+        onClick={getProjectId}
+        initial={{ opacity: 0.1, y: 200 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.6 }}
+        >
             <h3>{props.title}</h3>
-        </div>
+        </motion.div>
     )
 }
 

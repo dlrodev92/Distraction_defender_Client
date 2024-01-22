@@ -10,6 +10,7 @@ import AddProject from './AddProject'
 import EditProject from './EditProject';
 import AddTask from './AddTask';
 import UniversalModal from './UniversalModal';
+import{ AnimatePresence } from 'framer-motion';
 
 
 function TaskManager({projects, setProjects, getUserProjects, }){
@@ -126,9 +127,11 @@ function TaskManager({projects, setProjects, getUserProjects, }){
                 toogleProjectAdd={toogleProjectAdd}
                 /> 
                 :  
-                <div className='item-container'>
-                    {getProjects()}
-                </div>
+                <AnimatePresence>
+                    <div className='item-container'>
+                        {getProjects()}
+                    </div>
+                </AnimatePresence>
                 }
                
             </div>
@@ -168,11 +171,13 @@ function TaskManager({projects, setProjects, getUserProjects, }){
                 }
                
                <div className='item-container'>
+                <AnimatePresence>
                     {selectedProject.tasks && selectedProject.tasks.length > 0 ? 
                         getProjectTasks()
                         :
                         <h2>There are no tasks on this project yet</h2>
                     }
+                </AnimatePresence>
                     <AddTask 
                         selectedProject={selectedProject} 
                         selectedProjectTasks={selectedProject.tasks} 

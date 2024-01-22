@@ -60,7 +60,6 @@ const Signup = () => {
   
     try {
       const response = await api.signup(dataConfirmed);
-      console.log('Server Response:', response);
   
       if (response.success) {
         alert('Account created successfully. You can now log in.');
@@ -83,10 +82,11 @@ const Signup = () => {
       } else {
         // Something happened in setting up the request that triggered an Error
         console.error('Error setting up the request:', error.message);
+        alert(`Error: chekc the console for more information`);
       }
     }
   
-      alert(`Error: chekc the console for more information`);
+      
   };
 
   return (

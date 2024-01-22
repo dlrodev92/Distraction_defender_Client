@@ -2,6 +2,7 @@ import "../scss/task-item.scss";
 import { useState, useEffect } from "react";
 import deleteIcon from "../assets/icons/delete.svg";
 import projectsApi from '../api/projectsApi';
+import { motion } from "framer-motion";
 
 const TaskItem = ({ selectedProject, id, completed, description, due, label, created, setSelectedProject }) => {
     const [isComplete, setIsComplete] = useState(completed);
@@ -36,7 +37,12 @@ const TaskItem = ({ selectedProject, id, completed, description, due, label, cre
     }
 
     return (
-        <div className="task-item-container">
+        <motion.div className="task-item-container"
+            initial={{ opacity: 0.1, y: 200 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0}}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+        >
             <div className="task-item-container-info" onClick={toogleTaskEdit}>
                 <div className="task-item-container-header">
                     <p>{description}</p>
@@ -57,7 +63,7 @@ const TaskItem = ({ selectedProject, id, completed, description, due, label, cre
                 </button>
 
             </div>
-        </div>
+        </motion.div>
     )
 }
 

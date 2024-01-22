@@ -9,12 +9,9 @@ import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import { useAuthContext }   from '../context/useAuthContext';
 import { useState } from 'react';
-// import { MagicMotion } from "react-magic-motion";
-
+import { motion } from "framer-motion"
 
 const UserDashboard = ({userData, toogleUserEdit}) =>{
-
-  console.log(userData)
 
   const Navigate = useNavigate();
   const { dispatch } = useAuthContext();
@@ -93,54 +90,67 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
 
  
     return(
-    // <MagicMotion transition={{ type: "spring", stiffness: 100, damping: 12 }}>
-      <div className='user-dashboard-container'>
-        {isEdit?
-        (
-        <>
-            <form className="user-edit-container">
-                <Input label='Username' name='username' onChange={handleUserFormChange}/>
-                <Input label='Password' type='email' name='current_password' onChange={handleUserFormChange}/>
-                <Input label='New Password' type='password' name='new_password' onChange={handleUserFormChange}/>
-                <label>Image </label>
-                <input className='picture-input' type="file" name="image" accept='.jpg, .png, .jpeg' onChange={handleUserImage}/>
-            </form>
-            <div className='buttons-container'>
-            <button className='getback-button' onClick={toogleEdit}>
-                <img src={exitIcon} alt="getback"/>
-            </button>
-            <button className='save-button'>
-                <img src={saveIcon} alt="getback" onClick={handleSubmitEditUserForm}/>
-            </button>
-            </div>
-        </>
-        ) 
-
-        :
-
-        (
-        <>
-            <div className="userImage-container">
-              <div className='img-wrapper'>
-                <img src={`https://distraction-defender-server.onrender.com${userData.ProfilePicture.replace('http://127.0.0.1:8000//', '/')}`} alt="userImage"/>
+        <div className='user-dashboard-container'>
+          {isEdit?
+          (
+          <motion.div 
+          key="edit"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1 }}
+          className='user-wrapper-container'
+          >
+              <form className="user-edit-container">
+                  <Input label='Username' name='username' onChange={handleUserFormChange}/>
+                  <Input label='Password' type='email' name='current_password' onChange={handleUserFormChange}/>
+                  <Input label='New Password' type='password' name='new_password' onChange={handleUserFormChange}/>
+                  <label>Image </label>
+                  <input className='picture-input' type="file" name="image" accept='.jpg, .png, .jpeg' onChange={handleUserImage}/>
+              </form>
+              <div className='buttons-container'>
+              <button className='getback-button' onClick={toogleEdit}>
+                  <img src={exitIcon} alt="getback"/>
+              </button>
+              <button className='save-button'>
+                  <img src={saveIcon} alt="getback" onClick={handleSubmitEditUserForm}/>
+              </button>
               </div>
-                <h2>{userData.Username}</h2>
-            </div>
+          </motion.div>
+          ) 
 
-            <div className='buttons-container'>
-            <button className='edit-button' onClick={toogleEdit}>
-                <img src={editIcon} alt="editIcon"/>
-            </button>
-            <button className='shutdown-button' onClick={logout}>
-                <img src={shutdownIcon} alt="shutdownIcon"/>
-            </button>
-            </div>
-        </>
-        )
-        }
+          :
 
-    </div>
-    // </MagicMotion>
+          (
+            <motion.div
+            key="edit"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1 }}
+            className='user-wrapper-container'
+            >
+              <div className="userImage-container">
+                <div className='img-wrapper'>
+                  <img src={`https://distraction-defender-server.onrender.com${userData.ProfilePicture.replace('http://127.0.0.1:8000//', '/')}`} alt="userImage"/>
+                </div>
+                  <h2>{userData.Username}</h2>
+              </div>
+
+              <div className='buttons-container'>
+              <button className='edit-button' onClick={toogleEdit}>
+                  <img src={editIcon} alt="editIcon"/>
+              </button>
+              <button className='shutdown-button' onClick={logout}>
+                  <img src={shutdownIcon} alt="shutdownIcon"/>
+              </button>
+              </div>
+            </motion.div>
+          )
+          }
+
+      </div>
+      
     )
 }
 
