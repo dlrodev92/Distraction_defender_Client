@@ -88,6 +88,9 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
       }
     };
 
+    if(userData){
+      console.log(userData);
+    }
  
     return(
         <div className='user-dashboard-container'>
@@ -132,7 +135,7 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
             >
               <div className="userImage-container">
                 <div className='img-wrapper'>
-                  <img src={`https://distraction-defender-server.onrender.com${userData.ProfilePicture.replace('http://127.0.0.1:8000//', '/')}`} alt="userImage"/>
+                  <img src={userData.ProfilePicture} alt="userImage"/>
                 </div>
                   <h2>{userData.Username}</h2>
               </div>

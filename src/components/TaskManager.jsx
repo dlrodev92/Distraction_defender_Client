@@ -46,6 +46,7 @@ function TaskManager({projects, setProjects, getUserProjects, }){
     const getProjects = () => {
         // Check if projects is defined and not empty
         if (projects && projects.length > 0) {
+            console.log('Projects', projects);
             return projects.map(project => (
                 <ProjectItem key={project.id} title={project.title} url={project.image} handleSelectedProject={() => handleSelectedProject(project.id)} />
             ));
