@@ -54,9 +54,7 @@ const Signup = () => {
       image: profilePicture instanceof File ? profilePicture : null,
     };
 
-    console.log('userData:', dataConfirmed);
-    console.log('profilePicture:', profilePicture);
-
+    
   
     try {
       const response = await api.signup(dataConfirmed);

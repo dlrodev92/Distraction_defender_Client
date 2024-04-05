@@ -1,10 +1,12 @@
 import '../scss/project-item.scss'
 import {motion} from 'framer-motion'
+import { formatUrl } from '../utils/formatUrl';
+
 
 
 const ProjectItem = (props) => {
     const containerStyle = {
-        backgroundImage: `url(${props.url})`,
+        backgroundImage: `url(${formatUrl(props.url,'http://127.0.0.1:8000/' )})`,
         backgroundPosition: 'center', 
         backgroundSize: 'cover',
       };

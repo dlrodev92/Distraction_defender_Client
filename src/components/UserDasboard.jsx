@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthContext }   from '../context/useAuthContext';
 import { useState } from 'react';
 import { motion } from "framer-motion"
+import { formatUrl } from '../utils/formatUrl';
 
 const UserDashboard = ({userData, toogleUserEdit}) =>{
 
@@ -135,7 +136,7 @@ const UserDashboard = ({userData, toogleUserEdit}) =>{
             >
               <div className="userImage-container">
                 <div className='img-wrapper'>
-                  <img src={userData.ProfilePicture} alt="userImage"/>
+                  <img src={formatUrl(userData.ProfilePicture, 'http://127.0.0.1:8000/')} alt="userImage"/>
                 </div>
                   <h2>{userData.Username}</h2>
               </div>

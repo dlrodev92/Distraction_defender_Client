@@ -11,6 +11,7 @@ import EditProject from './EditProject';
 import AddTask from './AddTask';
 import UniversalModal from './UniversalModal';
 import{ AnimatePresence } from 'framer-motion';
+import { formatUrl } from '../utils/formatUrl';
 
 
 function TaskManager({projects, setProjects, getUserProjects, }){
@@ -106,7 +107,7 @@ function TaskManager({projects, setProjects, getUserProjects, }){
 
 
     const containerStyle = {
-        backgroundImage: selectedProject ? `url(${selectedProject.image})`: `url(https://i.ibb.co/X3rdqSS/Coming-So-On-1.webp)`,
+        backgroundImage: selectedProject ? `url(${formatUrl(selectedProject.image,'http://127.0.0.1:8000/' )})`: `url(https://i.ibb.co/X3rdqSS/Coming-So-On-1.webp)`, 
         backgroundPosition: 'center', 
         backgroundSize: 'cover', 
       };
